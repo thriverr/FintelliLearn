@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "292682561227",
+    "project_id": "fintelli-7459a",
+    "storage_bucket": "fintelli-7459a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292682561227:android:943d1343b705896c914d4e",
+        "android_client_info": {
+          "package_name": "com.example.myscreen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXYPx0jzq8E6tqzjfU7x1gNWTn1fBW-e4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
