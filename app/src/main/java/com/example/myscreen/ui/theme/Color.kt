@@ -14,3 +14,5 @@ val BlueColor=Color(0xFF64B5F6)
 val GreenColor=Color(0xFF7FFFD4)
 val YellowColor=Color(0xFFFFF176)
 val green = Color(0xFF81C784)
+val lavender = Color(0xFFF2DFFF)
+
