@@ -16,3 +16,4 @@ val YellowColor=Color(0xFFFFF176)
 val green = Color(0xFF81C784)
 val lavender = Color(0xFFF2DFFF)
 
+val peach = Color(0xFFFFF1DC)

@@ -11,5 +11,7 @@ object Routes {
     const val KidsScreen="KidsScreen"
     const val NewsScreen="NewsScreen"
     const val CalculationPage="CalculationPage"
+    const val BudgetTracker="BudgetTracker"
+    const val AdultScreen="AdultScreen"
 
 }

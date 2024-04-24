@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArtTrack
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Home
@@ -89,7 +90,8 @@ fun AgeScreen(navController: NavController){
                 Text(text = "Age: 7-19")
             }
             Spacer(modifier = Modifier.size(25.dp))
-            Button(onClick = { isClicked2 = !isClicked2 }, modifier = Modifier
+            Button(onClick = { isClicked2 = !isClicked2
+                navController.navigate(Routes.AdultScreen)}, modifier = Modifier
                 .weight(1f)
                 .padding(18.dp)
                 .heightIn(150.dp)
@@ -146,6 +148,17 @@ fun NavDrawer(){
                             drawerState.close()
                         }
                         navigationController.navigate(Routes.NewsScreen){
+                            popUpTo(0)
+                        }
+                    })
+                NavigationDrawerItem(label = { Text(text = "Budget Tracker", color = Color.Black) },
+                    selected =false ,
+                    icon = { Icon(imageVector = Icons.Default.ArtTrack, contentDescription ="Budget Tracker" ) },
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.close()
+                        }
+                        navigationController.navigate(Routes.BudgetTracker){
                             popUpTo(0)
                         }
                     })
@@ -227,6 +240,12 @@ fun NavDrawer(){
                 }
                 composable(Routes.CalculationPage){
                     CalculationPage()
+                }
+                composable(Routes.BudgetTracker){
+                   BudgetTracker()
+                }
+                composable(Routes.AdultScreen){
+                    AdultScreen()
                 }
 
                 composable(Routes.SignInPage){
