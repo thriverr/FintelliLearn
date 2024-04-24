@@ -10,5 +10,6 @@ object Routes {
     const val FintelliLearn=" FintelliLearn"
     const val KidsScreen="KidsScreen"
     const val NewsScreen="NewsScreen"
+    const val CalculationPage="CalculationPage"
 
 }

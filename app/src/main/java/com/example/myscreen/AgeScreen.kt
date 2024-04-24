@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Logout
@@ -159,6 +160,17 @@ fun NavDrawer(){
                             popUpTo(0)
                         }
                     })
+                NavigationDrawerItem(label = { Text(text = "Finanial Calculator", color = Color.Black) },
+                    selected =false ,
+                    icon = { Icon(imageVector = Icons.Default.Calculate, contentDescription ="Financial Calculator" ) },
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.close()
+                        }
+                        navigationController.navigate(Routes.CalculationPage){
+                            popUpTo(0)
+                        }
+                    })
                 NavigationDrawerItem(label = { Text(text = "Logout", color = Color.Black) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Logout, contentDescription ="Logout" ) },
@@ -212,6 +224,9 @@ fun NavDrawer(){
                 }
                 composable(Routes.CommunityForum){
                     CommunityForum()
+                }
+                composable(Routes.CalculationPage){
+                    CalculationPage()
                 }
 
                 composable(Routes.SignInPage){
