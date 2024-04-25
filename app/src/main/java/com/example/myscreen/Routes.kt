@@ -14,6 +14,7 @@ object Routes {
     const val BudgetTracker="BudgetTracker"
     const val AdultScreen="AdultScreen"
     const val CompoundInterestCalculator="CompoundInterestCalculator"
+    const val quiz="quiz"
 
 
 }

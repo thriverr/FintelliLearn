@@ -87,7 +87,7 @@ fun AgeScreen(navController: NavController){
                     containerColor = if (isClicked1) Color.LightGray else Purple_200
                 )
             ) {
-                Text(text = "Age: 7-19")
+                Text(text = "Junior Scholars      (Age 12-18)")
             }
             Spacer(modifier = Modifier.size(25.dp))
             Button(onClick = { isClicked2 = !isClicked2
@@ -100,7 +100,7 @@ fun AgeScreen(navController: NavController){
                     containerColor = if (isClicked2) Color.LightGray else Purple_200
                 )
             ) {
-                Text(text = "Age:20 above")
+                Text(text = "Financial Mastery Zone      (Age 19+)")
             }
         }}
 }
@@ -245,12 +245,14 @@ fun NavDrawer(){
                    BudgetTracker()
                 }
                 composable(Routes.AdultScreen){
-                    AdultScreen()
+                    AdultScreen(navController =navigationController)
                 }
                 composable(Routes.CompoundInterestCalculator){
                     CompoundInterestCalculator()
                 }
-
+                composable(Routes.quiz){
+                    VideoPlay()
+                }
                 composable(Routes.SignInPage){
                     SignInPage(navController =navigationController )
                 }

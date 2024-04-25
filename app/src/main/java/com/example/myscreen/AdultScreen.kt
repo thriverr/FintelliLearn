@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myscreen.ui.theme.BlueColor
 import com.example.myscreen.ui.theme.GreenColor
 import com.example.myscreen.ui.theme.YellowColor
@@ -27,7 +28,9 @@ import com.example.myscreen.ui.theme.peach
 fun MyButton(
     text: String,
     description: String,
-    color: Color
+    color: Color,
+    onClick: () -> Unit,
+    navController: NavController
 ) {
     Box(
         modifier = Modifier
@@ -36,7 +39,7 @@ fun MyButton(
             .padding(8.dp)
     ) {
         androidx.compose.material3.Button(
-            onClick = { /* Handle button click */ },
+            onClick = onClick,
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(color)
@@ -65,7 +68,7 @@ fun MyButton(
 }
 
 @Composable
-fun MyLazyColumn() {
+fun MyLazyColumn(navController: NavController) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(50.dp)
@@ -77,7 +80,7 @@ fun MyLazyColumn() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Financial Literacy for Young Minds",
+                    text = "Financial Mastery Zone!",
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif,
                     fontSize = 28.sp
@@ -92,14 +95,19 @@ fun MyLazyColumn() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 MyButton(
+
                     text = "Savings",
                     description = "Unlocking Financial Freedom: Building Strong Saving Habits",
-                    color = BlueColor
+                    color = BlueColor,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
                 MyButton(
                     text = "Budgeting",
                     description = "Master Money Management: Essential Skills for Effective Budgeting",
-                    color = lavender
+                    color = lavender,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
             }
         }
@@ -112,12 +120,16 @@ fun MyLazyColumn() {
                 MyButton(
                     text = "Quiz",
                     description = "Test your Financial Savvy: Dive into interactive Finance Quizzes",
-                    color = YellowColor
+                    color = YellowColor,
+                    navController = navController,
+                    onClick = {navController.navigate(Routes.quiz) }
                 )
                 MyButton(
                     text = "Explore More",
                     description = "Discover Additional Resources: Expand your financial knowledge",
-                    color = GreenColor
+                    color = GreenColor,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
             }
         }
@@ -130,12 +142,18 @@ fun MyLazyColumn() {
                 MyButton(
                     text = "Retirement Planning",
                     description = "Plan your retirement to stay free and happy in your old age.",
-                    color = peach
+                    color = peach,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
+
                 )
                 MyButton(
                     text = "Investment",
                     description = "Invest in resources to increase your financial wealth.",
-                    color = Color.LightGray
+                    color = Color.LightGray,
+
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
             }
         }
@@ -144,8 +162,8 @@ fun MyLazyColumn() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdultScreen() {
+fun AdultScreen(navController: NavController) {
     Scaffold {
-        MyLazyColumn()
+        MyLazyColumn(navController = navController)
     }
 }

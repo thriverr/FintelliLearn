@@ -81,9 +81,9 @@ fun MLazyColumn() {
     ) {
         item {
             Spacer(modifier = Modifier.height(100.dp))
-            Box(
+                Column(
                 modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = "Financial Literacy for Young Minds",

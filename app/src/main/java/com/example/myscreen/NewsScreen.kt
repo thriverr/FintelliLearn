@@ -83,7 +83,7 @@ fun NewsItem(article: Article, onItemClick: (Article) -> Unit) {
     ){
         Box(
             modifier = Modifier
-                .size(200.dp)
+                .size(130.dp)
                 .padding(8.dp)
         ) {
             article.urlToImage?.let { imageUrl ->
