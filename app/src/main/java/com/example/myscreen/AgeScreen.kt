@@ -239,13 +239,16 @@ fun NavDrawer(){
                     CommunityForum()
                 }
                 composable(Routes.CalculationPage){
-                    CalculationPage()
+                    CalculationPage(navController =navigationController )
                 }
                 composable(Routes.BudgetTracker){
                    BudgetTracker()
                 }
                 composable(Routes.AdultScreen){
                     AdultScreen()
+                }
+                composable(Routes.CompoundInterestCalculator){
+                    CompoundInterestCalculator()
                 }
 
                 composable(Routes.SignInPage){

@@ -21,9 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun CalculationPage() {
+fun CalculationPage(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +55,7 @@ fun CalculationPage() {
             description = "Calculate compound interest of your investment or for how long can your investment money last with this calculator.",
 
             backgroundColor = Color.LightGray,
-            onClick = { /* Handle button 1 click */ }
+            onClick = {  navController.navigate(Routes.CompoundInterestCalculator) }
         )
         Spacer(modifier = Modifier.height(26.dp))
         Button(
@@ -63,13 +64,7 @@ fun CalculationPage() {
             backgroundColor = Color.LightGray,
             onClick = { /* Handle button 2 click */ }
         )
-        Spacer(modifier = Modifier.height(26.dp))
-        Button(
-            headline = "Budget Planner",
-            description = "You can create your budget planner",
-            backgroundColor = Color.LightGray,
-            onClick = { /* Handle button 3 click */ }
-        )
+
     }
 }
 

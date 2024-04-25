@@ -13,5 +13,7 @@ object Routes {
     const val CalculationPage="CalculationPage"
     const val BudgetTracker="BudgetTracker"
     const val AdultScreen="AdultScreen"
+    const val CompoundInterestCalculator="CompoundInterestCalculator"
+
 
 }
