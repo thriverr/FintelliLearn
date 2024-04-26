@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArtTrack
 import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Logout
@@ -184,6 +185,17 @@ fun NavDrawer(){
                             popUpTo(0)
                         }
                     })
+                NavigationDrawerItem(label = { Text(text = "Financial Health Assessment Bot", color = Color.Black) },
+                    selected =false ,
+                    icon = { Icon(imageVector = Icons.Default.ChatBubbleOutline, contentDescription ="Financial Health Assessment Bot" ) },
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.close()
+                        }
+                        navigationController.navigate(Routes.SignInPage){
+                            popUpTo(0)
+                        }
+                    })
                 NavigationDrawerItem(label = { Text(text = "Logout", color = Color.Black) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Logout, contentDescription ="Logout" ) },
@@ -249,6 +261,9 @@ fun NavDrawer(){
                 }
                 composable(Routes.CompoundInterestCalculator){
                     CompoundInterestCalculator()
+                }
+                composable(Routes.Bot){
+                    Bot()
                 }
                 composable(Routes.quiz){
                     VideoPlay()

@@ -2,6 +2,10 @@ package com.example.myscreen
 
 
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -38,9 +43,21 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
             put("Learn About Saving", Routes.ImpOfSavingArticle)
             put("Credit", Routes.CreditPage)
 
-            // Add more mappings as needed
+
         }
     }
+
+    val youtubeLinkMap  = remember {
+        mutableMapOf<Int, String>().apply {
+            // Define your mapping here
+            put(R.drawable.piggy, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+
+
+        }
+    }
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.size(100.dp))
         Box(modifier = Modifier.fillMaxWidth(),
@@ -52,20 +69,22 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
         )}
         Spacer(modifier = Modifier.size(24.dp))
 
-        Row(modifier = Modifier.fillMaxWidth().background(Color.LightGray),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.LightGray),
             horizontalArrangement = Arrangement.Center){
 
-            Text(text = "Topic",fontSize = 24.sp,
+            Text(text = "Topics",fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "Article",fontSize = 24.sp,
+            Text(text = "Reading Reference",fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = "Video",fontSize = 24.sp,
+            Text(text = "Watch & Learn",fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f)
             )
@@ -82,17 +101,28 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
                 ) {
                     Text(text = rowData.first, fontSize = 14.sp, modifier = Modifier.weight(2f)
                     )
+
                     val destination = destinationMap[rowData.second] ?: "DefaultDestination"
                     Text(text = rowData.second, fontSize = 14.sp,
-                        modifier = Modifier.weight(2f).clickable { navController.navigate(destination) }
+                        modifier = Modifier
+                            .weight(2f)
+                            .clickable { navController.navigate(destination) }
                     )
-                    Image(
-                        painter = painterResource(id = rowData.third) ,
-                        contentDescription = "",
-                        modifier = Modifier.weight(1f)
-                            .size(32.dp)
-                            .clickable { }
-                    )
+                    val youtubeLink = youtubeLinkMap[rowData.third]
+                    if (youtubeLink != null) {
+                        Image(
+                            painter = painterResource(id = rowData.third),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .weight(1f)
+                                .size(32.dp)
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+                                    launcher.launch(intent)
+
+                                }
+                        )
+                    }
 
                 }
             }

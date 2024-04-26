@@ -15,6 +15,7 @@ object Routes {
     const val AdultScreen="AdultScreen"
     const val CompoundInterestCalculator="CompoundInterestCalculator"
     const val quiz="quiz"
+    const val Bot="Bot"
     const val LearningPage="LearningPage"
     const val ImpOfSavingArticle="ImpOfSavingArticle"
     const val CreditPage="CreditPage"
