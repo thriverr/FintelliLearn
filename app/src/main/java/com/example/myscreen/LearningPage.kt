@@ -122,6 +122,7 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
 
                                 }
                         )
+
                     }
 
                 }
