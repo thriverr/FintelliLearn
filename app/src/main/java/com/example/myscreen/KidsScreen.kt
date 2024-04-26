@@ -29,14 +29,16 @@ import com.example.myscreen.ui.theme.lavender
 @Composable
 fun KidsScreen(navController: NavController) {
     Scaffold {
-        MLazyColumn()
+        MLazyColumn(navController = navController)
     }
 }
 @Composable
-fun Button(
+fun MButton(
     text: String,
     description: String,
-    color: Color
+    color: Color,
+    navController: NavController,
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -45,7 +47,7 @@ fun Button(
             .padding(8.dp)
     ) {
         androidx.compose.material3.Button(
-            onClick = { /* Handle button click */ },
+            onClick = onClick,
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(color)
@@ -74,7 +76,7 @@ fun Button(
 }
 
 @Composable
-fun MLazyColumn() {
+fun MLazyColumn(navController: NavController) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(50.dp)
@@ -100,15 +102,19 @@ fun MLazyColumn() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(
+                MButton(
                     text = "Savings",
                     description = "Unlocking Financial Freedom: Building Strong Saving Habits",
-                    color = BlueColor
+                    color = BlueColor,
+                    navController = navController,
+                    onClick = { navController.navigate(Routes.LearningPage) }
                 )
-                Button(
+                MButton(
                     text = "Budgeting",
                     description = "Master Money Management: Essential Skills for Effective Budgeting",
-                    color = lavender
+                    color = lavender,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
             }
         }
@@ -118,15 +124,19 @@ fun MLazyColumn() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(
-                    text = "Quiz",
+                MButton(
+                    text = "Fun Zone!",
                     description = "Test your Financial Savvy: Dive into interactive Finance Quizzes",
-                    color = YellowColor
+                    color = YellowColor,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
-                Button(
+                MButton(
                     text = "Explore More",
                     description = "Discover Additional Resources: Expand your financial knowledge",
-                    color = GreenColor
+                    color = GreenColor,
+                    navController = navController,
+                    onClick = { /* Define action for clicking on Quiz button */ }
                 )
             }
         }

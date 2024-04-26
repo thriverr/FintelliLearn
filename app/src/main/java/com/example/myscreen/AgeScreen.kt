@@ -253,11 +253,34 @@ fun NavDrawer(){
                 composable(Routes.quiz){
                     VideoPlay()
                 }
+                composable(Routes.ImpOfSavingArticle){
+                    ImpOfSavingArticle()
+                }
+                composable(Routes.CreditPage){
+                   CreditPage()
+                }
+                composable(Routes.DefaultDestination){
+                    DefaultDestination()
+                }
                 composable(Routes.SignInPage){
                     SignInPage(navController =navigationController )
                 }
                 composable(Routes.KidsScreen){
                     KidsScreen(navController =navigationController)
+                }
+                composable(Routes.LearningPage){
+                    val data = listOf(
+                        Triple("Importance of Saving", "Learn About Saving",  R.drawable.piggy),
+                        Triple("What is credit?", "Credit", R.drawable.credit),
+                        Triple("What is debit?", "Debit",R.drawable.debit ),
+                        Triple("Credit vs Debit", "Difference", R.drawable.creditvsdebit),
+                        Triple("Importance of Saving", "Learn About Saving",  R.drawable.piggy),
+                        Triple("What is credit?", "Credit", R.drawable.credit),
+                        Triple("What is debit?", "Debit",R.drawable.debit ),
+                        Triple("Credit vs Debit", "Difference", R.drawable.creditvsdebit)
+                        // Add more rows as needed
+                    )
+                    Table(data = data,navController =navigationController)
                 }
                 composable(Routes.NewsScreen){
                     val newsViewModel = NewsViewModel()

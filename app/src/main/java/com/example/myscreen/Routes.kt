@@ -15,6 +15,8 @@ object Routes {
     const val AdultScreen="AdultScreen"
     const val CompoundInterestCalculator="CompoundInterestCalculator"
     const val quiz="quiz"
-
-
+    const val LearningPage="LearningPage"
+    const val ImpOfSavingArticle="ImpOfSavingArticle"
+    const val CreditPage="CreditPage"
+    const val DefaultDestination="DefaultDestination"
 }

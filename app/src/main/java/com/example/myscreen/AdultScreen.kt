@@ -140,7 +140,7 @@ fun MyLazyColumn(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 MyButton(
-                    text = "Retirement Planning",
+                    text = "Retirement       Planning",
                     description = "Plan your retirement to stay free and happy in your old age.",
                     color = peach,
                     navController = navController,
