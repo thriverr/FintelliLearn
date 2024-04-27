@@ -17,3 +17,4 @@ val green = Color(0xFF81C784)
 val lavender = Color(0xFFF2DFFF)
 
 val peach = Color(0xFFFFF1DC)
+val babyPink = Color(0xFFFFC0CB)
