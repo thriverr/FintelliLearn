@@ -224,7 +224,7 @@ fun NavDrawer(){
                             .background(BgBlueColor),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Fintelli Learn", fontFamily = FontFamily.Serif, fontSize = 20.sp
+                        Text(text = "Finshaala!", fontFamily = FontFamily.Serif, fontSize = 20.sp
                         , fontWeight = FontWeight.Bold
                         )
                     }
@@ -286,13 +286,13 @@ fun NavDrawer(){
                 }
                 composable(Routes.LearningPage){
                     val data = listOf(
-                        Triple("Importance of Saving", "Learn About Saving",  R.drawable.piggy),
-                        Triple("What is credit?", "Credit", R.drawable.credit),
-                        Triple("What is debit?", "Debit",R.drawable.debit ),
-                        Triple("Credit vs Debit", "Difference", R.drawable.creditvsdebit),
-                        Triple("Importance of Saving", "Learn About Saving",  R.drawable.piggy),
-                        Triple("What is credit?", "Credit", R.drawable.credit),
-                        Triple("What is debit?", "Debit",R.drawable.debit ),
+                        Triple("Importance of Saving", "The power of Saving",  R.drawable.piggy),
+                        Triple("How do you Save?", "Mastering art of Saving", R.drawable.howdoyousave),
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Emergency Fund", "Emergency fund",  R.drawable.emergencyfund),
+                        Triple("Types Of Savings Accounts", "Exploring different Options", R.drawable.typesofsaving),
+                        Triple("Savings on Everyday Expenses", "Strategies for it",R.drawable.savingeverydayexpenses ),
                         Triple("Credit vs Debit", "Difference", R.drawable.creditvsdebit)
                         // Add more rows as needed
                     )

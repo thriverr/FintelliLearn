@@ -59,12 +59,19 @@ fun CalculationPage(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(26.dp))
         Button(
-            headline = "Investment Time",
+            headline = "Investment Time Calculator",
             description = "Calculate the amount of time needed to grow an investment to a certian future value given annual interest rate.",
             backgroundColor = Color.LightGray,
             onClick = { /* Handle button 2 click */ }
         )
 
+        Spacer(modifier = Modifier.height(26.dp))
+        Button(
+            headline = "Inflation Calculator",
+            description = "Estimate the impact of inflation over time with our handy calculator. Simply input the initial amount and the years elapsed to see its adjusted value.",
+            backgroundColor = Color.LightGray,
+            onClick = { /* Handle button 2 click */ }
+        )
     }
 }
 

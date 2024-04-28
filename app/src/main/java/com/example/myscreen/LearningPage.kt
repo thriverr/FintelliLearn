@@ -40,9 +40,14 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
     val destinationMap = remember {
         mutableMapOf<String, String>().apply {
             // Define your mapping here
-            put("Learn About Saving", Routes.ImpOfSavingArticle)
-            put("Credit", Routes.CreditPage)
-
+            put("The power of Saving", Routes.ImpOfSavingArticle)
+            put("How do you Save?", Routes.CreditPage)
+            put("Setting Savings Goals", Routes.CreditPage)
+            put("Creating A budget with Savings", Routes.CreditPage)
+            put("Emergency Fund", Routes.CreditPage)
+            put("Types Of Savings Accounts", Routes.CreditPage)
+            put("Savings on Everyday Expenses", Routes.CreditPage)
+            put("Credit vs Debit", Routes.CreditPage)
 
         }
     }
@@ -51,7 +56,13 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
         mutableMapOf<Int, String>().apply {
             // Define your mapping here
             put(R.drawable.piggy, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-
+            put(R.drawable.howdoyousave, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.settinggoals, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.budgetsaving, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.emergencyfund, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.typesofsaving, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.savingeverydayexpenses, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.creditvsdebit, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
 
         }
     }
@@ -99,13 +110,14 @@ fun Table(data: List<Triple<String, String, Int>>,navController: NavController) 
                         .padding(vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(text = rowData.first, fontSize = 14.sp, modifier = Modifier.weight(2f)
+                    Text(text = rowData.first, fontSize = 14.sp, modifier = Modifier.weight(2f).
+                    padding(4.dp), fontWeight = FontWeight.Bold
                     )
 
                     val destination = destinationMap[rowData.second] ?: "DefaultDestination"
                     Text(text = rowData.second, fontSize = 14.sp,
                         modifier = Modifier
-                            .weight(2f)
+                            .weight(2f).padding(4.dp)
                             .clickable { navController.navigate(destination) }
                     )
                     val youtubeLink = youtubeLinkMap[rowData.third]
