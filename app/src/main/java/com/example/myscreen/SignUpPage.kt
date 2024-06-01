@@ -177,7 +177,10 @@ fun SignUpPage(navController: NavController) {
                             val userProfile = hashMapOf(
                                 "firstName" to firstName,
                                 "lastName" to lastName,
-                                "email" to email
+                                "email" to email,
+                                "profession" to "", // Set default value if not provided during signup
+                                "dob" to "", // Set default value if not provided during signup
+                                "finshaaalaId" to ""
                             )
 
                             user?.let {
