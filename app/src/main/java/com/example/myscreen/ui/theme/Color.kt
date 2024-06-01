@@ -18,3 +18,4 @@ val lavender = Color(0xFFF2DFFF)
 
 val peach = Color(0xFFFFF1DC)
 val babyPink = Color(0xFFFFC0CB)
+val blue = Color(0xFFbae1ff)

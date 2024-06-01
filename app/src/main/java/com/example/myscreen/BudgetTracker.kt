@@ -43,9 +43,6 @@ data class ShoppingItem(val id:Int,
                         var quantity:Int,
                         var isEditing:Boolean = false)
 
-
-
-
 @Composable
 fun BudgetTracker(){
     var sItems by remember { mutableStateOf(listOf<ShoppingItem>()) }
@@ -118,6 +115,7 @@ Spacer(modifier = Modifier.size(100.dp))
                             sItems = sItems + newItem
                             showDialog=false
                             itemName=""
+                            itemQuantity=""
                         }
                     }) {
                         Text("Add")
@@ -170,7 +168,7 @@ fun ShoppingItemEditor(item: ShoppingItem, onEditComplete: (String, Int) -> Unit
                     .wrapContentSize() // only take as space as needed
                     .padding(8.dp) )
 
-            OutlinedTextField(value = editedQuantity, onValueChange = {editedQuantity},
+            OutlinedTextField(value = editedQuantity, onValueChange = {editedQuantity=it},
                 label ={(Text(text = "Amount"))},  singleLine = true,
                 modifier= Modifier
                     .wrapContentSize() // only take as space as needed

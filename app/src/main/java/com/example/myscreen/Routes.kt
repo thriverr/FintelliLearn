@@ -5,7 +5,7 @@ object Routes {
     const val SignUpPage = "signUpPage"
     const val WelcomePage = "welcomePage"
     const val AgeScreen="AgeScreen"
-
+    const val AboutProfile="AboutProfile"
     const val CommunityForum="CommunityForum"
     const val FintelliLearn=" FintelliLearn"
     const val KidsScreen="KidsScreen"

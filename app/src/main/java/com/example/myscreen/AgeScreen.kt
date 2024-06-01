@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Newspaper
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -52,9 +53,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.myscreen.AIBot.Bot
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 import kotlinx.coroutines.launch
@@ -110,10 +114,12 @@ fun AgeScreen(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavDrawer(){
+fun NavDrawer(userId: String?){
     val navigationController= rememberNavController()
     val coroutineScope= rememberCoroutineScope()
     val drawerState= rememberDrawerState(initialValue = DrawerValue.Closed)
+
+
 
     ModalNavigationDrawer(drawerState = drawerState,
         gesturesEnabled = true,
@@ -140,6 +146,17 @@ fun NavDrawer(){
                         navigationController.navigate(Routes.AgeScreen){
                             popUpTo(0)
 
+                        }
+                    })
+                NavigationDrawerItem(label = { Text("Your Profile", color = Color.Black) },
+                    selected = false,
+                    icon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Your Profile") },
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.close()
+                        }
+                        navigationController.navigate("about_profile/$userId") {
+                            popUpTo(0)
                         }
                     })
                 NavigationDrawerItem(label = { Text(text = "News", color = Color.Black) },
@@ -193,7 +210,7 @@ fun NavDrawer(){
                         coroutineScope.launch {
                             drawerState.close()
                         }
-                        navigationController.navigate(Routes.SignInPage){
+                        navigationController.navigate(Routes.Bot){
                             popUpTo(0)
                         }
                     })
@@ -265,6 +282,11 @@ fun NavDrawer(){
                 }
                 composable(Routes.Bot){
                     Bot()
+                }
+                composable("about_profile/{userId}",
+                    arguments = listOf(navArgument("userId") { type = NavType.StringType })) { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId")
+                    AboutProfile(userId = userId)
                 }
                 composable(Routes.quiz){
                     VideoPlay()
