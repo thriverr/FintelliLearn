@@ -44,12 +44,12 @@ fun AboutProfile(userId: String?){
 
 
         val firestore = FirebaseFirestore.getInstance()
-        var firstName by remember { mutableStateOf("") }
-        var lastName by remember { mutableStateOf("") }
+        var username by remember { mutableStateOf("") }
+        //var lastName by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var dob by remember { mutableStateOf("") }
         var profession by remember { mutableStateOf("") }
-        var finshaaalaId by remember { mutableStateOf("") }
+        var finshaalaId by remember { mutableStateOf("") }
         var isEditing by remember { mutableStateOf(false) }
 
         LaunchedEffect(userId) {
@@ -57,12 +57,12 @@ fun AboutProfile(userId: String?){
                 firestore.collection("users").document(it).get()
                     .addOnSuccessListener { document ->
                         if (document.exists()) {
-                            firstName = document.getString("firstName") ?: ""
-                            lastName = document.getString("lastName") ?: ""
+                            username = document.getString("username") ?: ""
+                            //lastName = document.getString("lastName") ?: ""
                             email = document.getString("email") ?: ""
                             dob = document.getString("dob") ?: ""
                             profession = document.getString("profession") ?: ""
-                            finshaaalaId = document.getString("finshaaalaId") ?: ""
+                            finshaalaId = document.getString("finshaalaId") ?: ""
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -94,7 +94,7 @@ fun AboutProfile(userId: String?){
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = firstName.take(1).toUpperCase(),
+                        text = username.take(1).toUpperCase(),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                         fontSize = 38.sp,
                         color = Purple40
@@ -102,7 +102,7 @@ fun AboutProfile(userId: String?){
                 }
                 Spacer(modifier = Modifier.height(26.dp))
                 Text(
-                    text = "Welcome, $firstName $lastName!",
+                    text = "Welcome, $username !",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,
@@ -138,8 +138,8 @@ fun AboutProfile(userId: String?){
                         label = { Text("Profession") })
                     Spacer(modifier = Modifier.height(16.dp))
                     TextField(
-                        value = finshaaalaId,
-                        onValueChange = { finshaaalaId = it },
+                        value = finshaalaId,
+                        onValueChange = { finshaalaId = it },
                         label = { Text("Finshaala_id") })
                     Spacer(modifier = Modifier.height(16.dp))
                     TextButton(onClick = {
@@ -148,7 +148,7 @@ fun AboutProfile(userId: String?){
                             mapOf(
                                 "dob" to dob,
                                 "profession" to profession,
-                                "finshaalaId" to finshaaalaId
+                                "finshaalaId" to finshaalaId
                             )
                         ).addOnSuccessListener {
                             // Data saved successfully
@@ -179,7 +179,7 @@ fun AboutProfile(userId: String?){
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Finshaaala ID: $finshaaalaId",
+                        text = "Finshaaala ID: $finshaalaId",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Black,
                         textAlign = TextAlign.Start

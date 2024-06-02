@@ -56,8 +56,8 @@ fun SignUpPage(navController: NavController) {
     val firestore = FirebaseFirestore.getInstance()
     val outlineColor = Purple_200
     val focusedLabelColor = Purple_200
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+    //var lastName by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     // Column layout for the sign-up page
@@ -85,9 +85,9 @@ fun SignUpPage(navController: NavController) {
 
         // First Name input field
         OutlinedTextField(
-            value = firstName,
-            onValueChange = { firstName = it },
-            label = { Text("First Name", color = focusedLabelColor) },
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("user Name", color = focusedLabelColor) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -102,7 +102,7 @@ fun SignUpPage(navController: NavController) {
         )
 
         // Last Name input field
-        OutlinedTextField(
+       /* OutlinedTextField(
             value = lastName,
             onValueChange = { lastName = it },
             label = { Text("Last Name", color = focusedLabelColor) },
@@ -118,7 +118,7 @@ fun SignUpPage(navController: NavController) {
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-
+*/
         // Email input field
         OutlinedTextField(
             value = email,
@@ -175,12 +175,12 @@ fun SignUpPage(navController: NavController) {
 
                             // Create a user profile in Firestore
                             val userProfile = hashMapOf(
-                                "firstName" to firstName,
-                                "lastName" to lastName,
+                                "userName" to username,
+
                                 "email" to email,
                                 "profession" to "", // Set default value if not provided during signup
                                 "dob" to "", // Set default value if not provided during signup
-                                "finshaaalaId" to ""
+                                "finshaalaId" to ""
                             )
 
                             user?.let {
