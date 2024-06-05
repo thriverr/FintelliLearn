@@ -47,12 +47,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpPage(navController: NavController) {
+fun SignUpPage(navController: NavController,auth: FirebaseAuth) {
 
     val background = BgBlueColor
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val auth = FirebaseAuth.getInstance()
+
+
     val firestore = FirebaseFirestore.getInstance()
     val outlineColor = Purple_200
     val focusedLabelColor = Purple_200
@@ -87,7 +88,7 @@ fun SignUpPage(navController: NavController) {
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("user Name", color = focusedLabelColor) },
+            label = { Text("User Name", color = focusedLabelColor) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -175,12 +176,13 @@ fun SignUpPage(navController: NavController) {
 
                             // Create a user profile in Firestore
                             val userProfile = hashMapOf(
-                                "userName" to username,
+                                "username" to username,
 
                                 "email" to email,
                                 "profession" to "", // Set default value if not provided during signup
                                 "dob" to "", // Set default value if not provided during signup
-                                "finshaalaId" to ""
+                                "finshaalaId" to "",
+                                "totalScore" to 0
                             )
 
                             user?.let {
@@ -189,7 +191,7 @@ fun SignUpPage(navController: NavController) {
                                     .set(userProfile)
                                     .addOnSuccessListener {
                                         // User data stored successfully, navigate with arguments
-                                        navController.navigate("welcome_page/${user.uid}")
+                                        navController.navigate(Routes.WelcomePage)
                                     }
                                     .addOnFailureListener { exception ->
                                         // Handle Firestore storage error

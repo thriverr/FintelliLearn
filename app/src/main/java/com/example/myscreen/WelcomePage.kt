@@ -1,9 +1,14 @@
 package com.example.myscreen
 
 import androidx.compose.runtime.Composable
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun WelcomePage(userId: String?) {
+fun WelcomePage(auth: FirebaseAuth, db: FirebaseFirestore) {
 
-        NavDrawer(userId = userId) // Assuming this displays the navigation drawer
+        NavDrawer(
+            auth=auth ,
+            db = db
+        ) // Assuming this displays the navigation drawer
     }

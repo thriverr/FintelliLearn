@@ -140,7 +140,7 @@ fun SignInPage(navController: NavController) {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Navigate to the welcome page if the sign-in is successful
-                            navController.navigate("welcome_page/${auth.currentUser?.uid}")
+                            navController.navigate(Routes.WelcomePage)
                         } else {
                             // Handle sign-in error (e.g., show an error message)
                             errorMessage = "Invalid email or password"

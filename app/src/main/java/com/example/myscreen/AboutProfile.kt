@@ -36,11 +36,12 @@ import androidx.compose.ui.unit.sp
 import com.example.myscreen.ui.theme.Purple40
 import com.example.myscreen.ui.theme.Purple80
 import com.example.myscreen.ui.theme.Purple_200
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 @Composable
-fun AboutProfile(userId: String?){
+fun AboutProfile( currentUser: FirebaseUser){
 
 
         val firestore = FirebaseFirestore.getInstance()
@@ -51,25 +52,55 @@ fun AboutProfile(userId: String?){
         var profession by remember { mutableStateOf("") }
         var finshaalaId by remember { mutableStateOf("") }
         var isEditing by remember { mutableStateOf(false) }
+var totalScore by remember { mutableStateOf(0) }
 
-        LaunchedEffect(userId) {
-            userId?.let {
-                firestore.collection("users").document(it).get()
-                    .addOnSuccessListener { document ->
-                        if (document.exists()) {
-                            username = document.getString("username") ?: ""
-                            //lastName = document.getString("lastName") ?: ""
-                            email = document.getString("email") ?: ""
-                            dob = document.getString("dob") ?: ""
-                            profession = document.getString("profession") ?: ""
-                            finshaalaId = document.getString("finshaalaId") ?: ""
+    var userProfile by remember {
+        mutableStateOf(
+            User(
+                username = "",
+                email = "",
+                dob = "",
+                profession = "",
+                finshaalaId = "",
+                totalScore = 0
+            )
+        )
+    }
+
+    LaunchedEffect(currentUser.uid) {
+        val userDocRef = firestore.collection("users").document(currentUser.uid)
+        userDocRef.get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    username = document.getString("username") ?: ""
+                    email=document.getString("email") ?: ""
+                    dob = document.getString("dob") ?: ""
+                     profession = document.getString("profession") ?: ""
+                    finshaalaId = document.getString("finshaalaId") ?: ""
+
+                    userProfile = User(username, currentUser.email ?: "", dob, profession, finshaalaId)
+
+                    firestore.collection("posts")
+                        .whereEqualTo("userFirstName", username)
+                        .get()
+                        .addOnSuccessListener { result ->
+                            totalScore = result.documents.sumOf { document ->
+                                document.getLong("score")?.toInt() ?: 0
+                            }
+                            // Update the user profile with the total score
+                            userProfile = userProfile.copy(totalScore = totalScore)
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        println("Firestore error: ${exception.message}")
-                    }
+                        .addOnFailureListener { e ->
+                            // Handle failure
+                        }
+                } else {
+                    // Handle the case where the document doesn't exist
+                }
             }
-        }
+            .addOnFailureListener { e ->
+                // Handle failure
+            }
+    }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
         Card(
@@ -94,10 +125,10 @@ fun AboutProfile(userId: String?){
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = username.take(1).toUpperCase(),
-                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                        fontSize = 38.sp,
-                        color = Purple40
+                        text = username.take(1).toString(),
+                        color = Purple40,
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
                 Spacer(modifier = Modifier.height(26.dp))
@@ -117,7 +148,25 @@ fun AboutProfile(userId: String?){
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Total Score: $totalScore",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black,
+                    textAlign = TextAlign.Start
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 if (isEditing) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    TextField(
+                        value = username,
+                        onValueChange = { username = it },
+                        label = { Text("Username") }
+                    )
+
+
+
+                    Spacer(modifier = Modifier.height(16.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             Icons.Default.CalendarToday,
@@ -144,8 +193,9 @@ fun AboutProfile(userId: String?){
                     Spacer(modifier = Modifier.height(16.dp))
                     TextButton(onClick = {
                         // Save data to Firestore
-                        firestore.collection("users").document(userId ?: "").update(
+                        firestore.collection("users").document(currentUser.uid ?: "").update(
                             mapOf(
+                                "username" to username,
                                 "dob" to dob,
                                 "profession" to profession,
                                 "finshaalaId" to finshaalaId
@@ -163,6 +213,13 @@ fun AboutProfile(userId: String?){
                     }
                 } else {
                     // Non-editable fields
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "User name: $username",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black,
+                        textAlign = TextAlign.Start
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Date of Birth: $dob",
@@ -199,3 +256,13 @@ fun AboutProfile(userId: String?){
     }
 
     }
+
+
+data class User(
+    val username: String?,
+    val email: String?,
+    val dob: String,
+    val profession: String,
+    val finshaalaId: String,
+    var totalScore: Int = 0
+)

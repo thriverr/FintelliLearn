@@ -39,21 +39,21 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.myscreen.AIBot.Bot
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavDrawer(userId: String?){
+fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
     val navigationController= rememberNavController()
     val coroutineScope= rememberCoroutineScope()
     val drawerState= rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -94,7 +94,7 @@ fun NavDrawer(userId: String?){
                         coroutineScope.launch {
                             drawerState.close()
                         }
-                        navigationController.navigate("about_profile/$userId") {
+                        navigationController.navigate(Routes.AboutProfile) {
                             popUpTo(0)
                         }
                     })
@@ -205,9 +205,15 @@ fun NavDrawer(userId: String?){
                 composable(Routes.AgeScreen){
                     AgeScreen(navController = navigationController)
                 }
-                composable(Routes.CommunityForum){
-                    CommunityForum()
-                }
+                composable(
+                    route = Routes.CommunityForum)
+                    {
+                        CommunityForum( currentUser = auth.currentUser!!, db = db,navController=navigationController)
+                    }
+
+                composable("addPost") { AddPostScreen(navController=navigationController,db=db,
+                    currentUser = auth.currentUser!!) }
+
                 composable(Routes.CalculationPage){
                     CalculationPage(navController =navigationController )
                 }
@@ -223,10 +229,9 @@ fun NavDrawer(userId: String?){
                 composable(Routes.Bot){
                     Bot()
                 }
-                composable("about_profile/{userId}",
-                    arguments = listOf(navArgument("userId") { type = NavType.StringType })) { backStackEntry ->
-                    val userId = backStackEntry.arguments?.getString("userId")
-                    AboutProfile(userId = userId)
+                composable(Routes.AboutProfile
+                    ) {
+                    AboutProfile( currentUser = auth.currentUser!!)
                 }
                 composable(Routes.quiz){
                     VideoPlay()

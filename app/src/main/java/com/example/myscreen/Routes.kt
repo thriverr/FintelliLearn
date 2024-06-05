@@ -20,4 +20,6 @@ object Routes {
     const val ImpOfSavingArticle="ImpOfSavingArticle"
     const val CreditPage="CreditPage"
     const val DefaultDestination="DefaultDestination"
+    const val AboutProfile="AboutProfile"
+
 }
