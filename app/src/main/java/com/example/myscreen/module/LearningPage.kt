@@ -52,27 +52,35 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
         mutableMapOf<String, String>().apply {
             // Define your mapping here
             put("The power of Saving", Routes.ImpOfSavingArticle)
-            put("How do you Save?", Routes.CreditPage)
-            put("Setting Savings Goals", Routes.CreditPage)
-            put("Creating A budget with Savings", Routes.CreditPage)
-            put("Emergency Fund", Routes.CreditPage)
-            put("Types Of Savings Accounts", Routes.CreditPage)
-            put("Savings on Everyday Expenses", Routes.CreditPage)
-            put("Credit vs Debit", Routes.CreditPage)
+            put("Mastering art of Saving", Routes.CreditPage)
+            put("Savings Goals", Routes.CreditPage)
+            put("Needs or Wants?", Routes.CreditPage)
+            put("Savings Account", Routes.SavingAccount)
+            put("Track Saving Goals", Routes.CreditPage)
+            put("Explore Interests", Routes.CreditPage)
+            put("Financial Terms", Routes.CreditPage)
+            put("Exploring Savings Accounts", Routes.TypesOfSavings)
+            put("Long term goals", Routes.CreditPage)
+            put("Explore Investing", Routes.CreditPage)
+            put("Credit & Debt management", Routes.CreditPage)
         }
     }
 
     val youtubeLinkMap = remember {
         mutableMapOf<Int, String>().apply {
             // Define your mapping here
-            put(R.drawable.piggy, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.howdoyousave, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.settinggoals, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.budgetsaving, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.emergencyfund, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.typesofsaving, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.savingeverydayexpenses, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
-            put(R.drawable.creditvsdebit, "https://youtu.be/JqYoLQXO7j4?si=7DOfuq7GwjzLURmJ")
+            put(R.drawable.piggy, "https://www.youtube.com/watch?v=JkCmIxraWlM")
+            put( R.drawable.allowance, "https://www.youtube.com/watch?v=NfurkrZEn3Q")
+            put( R.drawable.shortgoal, "https://www.youtube.com/watch?v=v-mlEQ7KW5Q&t=4s")
+            put( R.drawable.needswants, "https://www.youtube.com/watch?v=9ZxpWI1rDTE")
+            put(R.drawable.savingsac, "https://www.youtube.com/watch?v=HsXAvH3D7wY")
+            put( R.drawable.savetrack, "https://www.youtube.com/watch?v=Duxo4xXeMec")
+            put(R.drawable.interest, "https://www.youtube.com/watch?v=8edPzh71RIQ")
+            put( R.drawable.financeterms, "https://www.youtube.com/watch?v=E2wcbUNZ-yo")
+            put( R.drawable.typesofsaving, "https://www.youtube.com/watch?v=fzAoV0rkizI")
+            put(  R.drawable.longsave, " https://www.youtube.com/watch?v=jLojCtQPmbk")
+            put(R.drawable.investing, "https://www.youtube.com/watch?v=qIw-yFC-HNU")
+            put( R.drawable.debtmanage, "https://www.youtube.com/watch?v=Wh44hyYLnS4")
         }
     }
 
@@ -87,7 +95,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                 text = "Savings",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Serif, color = bluee
             )
         }
         Spacer(modifier = Modifier.size(24.dp))

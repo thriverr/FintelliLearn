@@ -52,15 +52,17 @@ import com.example.myscreen.Firebase.SignInPage
 import com.example.myscreen.R
 import com.example.myscreen.articles.CreditPage
 import com.example.myscreen.articles.DefaultDestination
+import com.example.myscreen.articles.SavingsAccount
+import com.example.myscreen.articles.TypesOfSavings
 import com.example.myscreen.calculators.CalculationPage
 import com.example.myscreen.calculators.CompoundInterestCalculator
 import com.example.myscreen.module.Table
+import com.example.myscreen.module.VideoPlay
 import com.example.myscreen.news.NewsScreen
 import com.example.myscreen.news.NewsViewModel
 import com.example.myscreen.screens.AdultScreen
 import com.example.myscreen.screens.AgeScreen
 import com.example.myscreen.screens.KidsScreen
-import com.example.myscreen.module.VideoPlay
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 import com.google.firebase.auth.FirebaseAuth
@@ -261,6 +263,12 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 composable(Routes.CreditPage){
                     CreditPage()
                 }
+                composable(Routes.SavingAccount){
+                    SavingsAccount()
+                }
+                composable(Routes.TypesOfSavings){
+                    TypesOfSavings()
+                }
                 composable(Routes.DefaultDestination){
                     DefaultDestination()
                 }
@@ -272,49 +280,44 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 }
                 composable(Routes.LearningPage){
                     val easyData = listOf(
-                        Triple("Importance of Saving", "The power of Saving", R.drawable.piggy),
-                        Triple("How do you Save?", "Mastering art of Saving",
-                            R.drawable.howdoyousave
+                        Triple("Introduction to Saving Money", "The power of Saving", R.drawable.piggy),
+                        Triple("Setting Aside Allowance or Pocket Money for Savings", "Mastering art of Saving",
+                            R.drawable.allowance
                         ),
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
-                        ),
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
+                        Triple("Saving for Short-Term Goals", "Saving goals", R.drawable.shortgoal),
+
+                        Triple("Identifying Wants vs. Needs", "Needs or Wants?",
+                            R.drawable.needswants
                         ),
                         // Add more rows as needed
                     )
 
                     val mediumData = listOf(
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
+                        Triple("Opening a Savings Account", "Savings Account", R.drawable.savingsac),
+                        Triple("Setting and Tracking Savings Goals", "Track Saving Goals",
+                            R.drawable.savetrack
                         ),
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
-                        ),Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
-                        ),
+                        Triple("Learning Interest and Its Growth", "Explore Interests"
+                            , R.drawable.interest),
+                        Triple("Understanding Basic Financial Terms", "Financial Terms",
+                            R.drawable.financeterms
+                        )
                     )
 
                     val hardData = listOf(
-                        Triple("Emergency Fund", "Emergency fund", R.drawable.emergencyfund),
-                        Triple("Types Of Savings Accounts", "Exploring different Options",
+
+                        Triple("Types Of Savings Accounts", "Exploring Savings Accounts",
                             R.drawable.typesofsaving
                         ),
                         // Add more rows as needed
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
+                        Triple("Long-Term Savings Plan", "Long term goals"
+                            , R.drawable.longsave),
+                        Triple("Introduction to Investing for Teens", "Explore Investing",
+                            R.drawable.investing
                         ),
-                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings",
-                            R.drawable.budgetsaving
-                        ),
+                        Triple("Learning Credit and Debt Management", "Credit & Debt management"
+                            , R.drawable.debtmanage),
+
                     )
 
                     val levels = listOf(
