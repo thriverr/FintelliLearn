@@ -57,9 +57,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 data class Post(var id: String = "", var title: String = "", val content: String = "",
-                val userFirstName: String = "", var score: Int = 0, var replies: List<Post> = emptyList()
+                val userFirstName: String = "", var score: Int = 0,
+                var replies: List<Reply> = emptyList(),
+                val ans: String = ""
 )
-
+data class Reply(
+    val userFirstName: String,
+    val ans: String
+)
 
 
 @Composable
@@ -125,24 +130,22 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
         // Fetch posts
         db.collection("posts").get().addOnSuccessListener { result ->
             val postList = result.map { document ->
-                Post(
+                val post = Post(
                     id = document.id,
                     title = document.getString("title") ?: "",
                     content = document.getString("content") ?: "",
                     userFirstName = document.getString("userFirstName") ?: "",
                     score = document.getLong("score")?.toInt() ?: 0,
-                    replies = (document.get("replies") as? List<Map<String, Any>>)?.map {
-                        Post(
-                            id = it["id"] as String,
-                            title = it["title"] as String,
-                            content = it["content"] as String,
-                            userFirstName = it["userFirstName"] as String,
-                            score = (it["score"] as Long).toInt()
 
-                        )
-                    } ?: emptyList()
                 )
+
+                // Fetch replies as pairs of userFirstName and ans
+                val replies = (document.get("replies") as? List<Map<String, String>>)?.map {
+                    Reply(it["userFirstName"] ?: "", it["ans"] ?: "")
+                } ?: emptyList()
+                post.copy(replies = replies)
             }
+
             posts = postList
             filteredPosts = postList
             thumbsUpClickedMap = postList.associateBy({ it.id }, { false })
@@ -174,30 +177,19 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
         }
     }
 
-    fun addReply(postId: String, replyPost: Post) {
+    fun addReply(postId: String, replyContent: String) {
         val postRef = db.collection("posts").document(postId)
         db.runTransaction { transaction ->
             val snapshot = transaction.get(postRef)
-            val replies = snapshot.get("replies") as? List<Map<String, Any>> ?: emptyList()
+            val replies = snapshot.get("replies") as? List<Map<String,  String>> ?: emptyList()
+            val currentUserFirstName = username ?: ""
             val updatedReplies = replies + mapOf(
-                "id" to "",
-                "title" to replyPost.title,
-                "content" to replyPost.content,
-                "userFirstName" to replyPost.userFirstName,
-                "score" to replyPost.score
+                "userFirstName" to (currentUserFirstName ?: ""),
+                "ans" to (replyContent ?: "")
             )
             transaction.update(postRef, "replies", updatedReplies)
         }.addOnSuccessListener {
-            // Update local state immediately after the transaction succeeds
-            val updatedPosts = posts.map { post ->
-                if (post.id == postId) {
-                    post.copy(replies = post.replies + replyPost)
-                } else {
-                    post
-                }
-            }
-            posts = updatedPosts
-            filteredPosts = updatedPosts
+            // Handle success
         }.addOnFailureListener { e ->
             // Handle failure
             Log.e("Forum", "Error adding reply: ${e.message}")
@@ -232,23 +224,21 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
                 // Refresh the post list after deletion
                 db.collection("posts").get().addOnSuccessListener { result ->
                     val updatedPosts = result.map { document ->
-                        Post(
+                        val post = Post(
                             id = document.id,
                             title = document.getString("title") ?: "",
                             content = document.getString("content") ?: "",
                             userFirstName = document.getString("userFirstName") ?: "",
                             score = document.getLong("score")?.toInt() ?: 0,
-                            replies = (document.get("replies") as? List<Map<String, Any>>)?.map {
-                                Post(
-                                    id = it["id"] as String,
-                                    title = it["title"] as String,
-                                    content = it["content"] as String,
-                                    userFirstName = it["userFirstName"] as String,
-                                    score = (it["score"] as Long).toInt()
-                                )
-                            } ?: emptyList()
+                            replies = emptyList()
                         )
-                    }
+
+                        // Fetch replies as pairs of userFirstName and ans
+                        val replies = (document.get("replies") as? List<Map<String, String>>)?.map {
+                            Reply(it["userFirstName"] ?: "", it["ans"] ?: "")
+                        } ?: emptyList()
+                        post.copy(replies = replies)}
+
                     posts = updatedPosts
                     filteredPosts = updatedPosts
                     thumbsUpClickedMap = updatedPosts.associateBy({ it.id }, { false })
@@ -366,10 +356,10 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
             items(filteredPosts) { post ->
                 PostItem(
                     post = post,
-                    onReply = { replyPost -> addReply(post.id, replyPost) },
+                    onReply = { replyContent -> addReply(post.id, replyContent) },
                     onUpvote = { upvotePost(post.id) },
                     onDelete = { deletePost(post.id) },
-                    currentUserFirstName = username,
+                    currentUserFirstName = username?:"U",
 
                     isUpvoted = thumbsUpClickedMap[post.id] ?: false
                 )
@@ -381,7 +371,7 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
 @Composable
 fun PostItem(
     post: Post,
-    onReply: (Post) -> Unit,
+    onReply: (String) -> Unit,
     onUpvote: () -> Unit,
     onDelete: () -> Unit,
     currentUserFirstName: String?,
@@ -456,12 +446,8 @@ fun PostItem(
                     Row {
                         androidx.compose.material3.Button(onClick = {
                             if (replyContent.isNotEmpty()) {
-                                val replyPost = Post(
-                                    title = "Re: ${post.title}",
-                                    content = replyContent,
-                                    userFirstName = currentUserFirstName ?: ""
-                                )
-                                onReply(replyPost)
+
+                                onReply(replyContent)
                                 showReplyInput = false
                                 replyContent = ""
                             }
@@ -483,6 +469,7 @@ fun PostItem(
             if (showReplies) {
                 Column(modifier = Modifier.padding(start = 20.dp)) {
                     post.replies.forEach { reply ->
+                        // Display user's first name and reply content
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -490,15 +477,12 @@ fun PostItem(
                                 .background(Color.LightGray)
                                 .padding(8.dp)
                         ) {
-                            Text(
-                                text = "${reply.userFirstName}: ${reply.content}",
-                                fontWeight = FontWeight.Bold
-                            )
+                            Text(text = reply.userFirstName, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = reply.ans) // Change reply.content to reply.ans
                         }
                     }
                 }
             }
-        }
-    }
-}
 
+        }}}
