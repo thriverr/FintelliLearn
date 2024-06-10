@@ -11,7 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class NewsViewModel : ViewModel() {
+
+    private val _selectedArticleUrl = MutableStateFlow<String?>(null)
+    val selectedArticleUrl: StateFlow<String?> get() = _selectedArticleUrl
     private val apiService: NewsApiService by lazy {
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -39,4 +43,24 @@ class NewsViewModel : ViewModel() {
             }
         }
     }
+
+    fun searchNews(query: String) {
+        viewModelScope.launch {
+            try {
+                val response = if (query.isNotEmpty()) {
+                    apiService.searchNews(query)
+                } else {
+                    apiService.getNews()
+                }
+                _news.value = response.articles
+            } catch (e: Exception) {
+                // Handle error
+                e.printStackTrace()
+            }
+        }
+    }
+    fun onArticleClicked(url: String) {
+        _selectedArticleUrl.value = url
+    }
 }
+

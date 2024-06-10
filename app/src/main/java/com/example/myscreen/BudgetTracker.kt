@@ -25,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,196 +37,237 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
-data class ShoppingItem(val id:Int,
-                        var name:String,
-                        var quantity:Int,
-                        var isEditing:Boolean = false)
+data class ShoppingItem(
+    val id: Int,
+    var description: String,
+    var amount: Int,
+    var isEditing: Boolean = false
+)
 
 @Composable
-fun BudgetTracker(){
+
+fun BudgetTracker(auth: FirebaseAuth) {
     var sItems by remember { mutableStateOf(listOf<ShoppingItem>()) }
-    var showDialog by remember { mutableStateOf(false)}
-    var itemName by remember{ mutableStateOf("") }
-    var itemQuantity by remember{ mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var itemName by remember { mutableStateOf("") }
+    var itemQuantity by remember { mutableStateOf("") }
+
+    // Initialize Firestore
+    val firestore = FirebaseFirestore.getInstance()
+    val currentUser = auth.currentUser
+    val userDocument = currentUser?.let { firestore.collection("users").document(it.uid) }
+
+    // Load transactions from Firestore
+    LaunchedEffect(currentUser) {
+        userDocument?.addSnapshotListener { snapshot, e ->
+            if (e != null || snapshot == null || !snapshot.exists()) {
+                return@addSnapshotListener
+            }
+
+            val transactions = snapshot.get("transactions") as? List<Map<String, Any>> ?: return@addSnapshotListener
+            sItems = transactions.map {
+                ShoppingItem(
+                    id = (it["id"] as Long).toInt(),
+                    description = it["description"] as String,
+                    amount = (it["amount"] as Long).toInt()
+                )
+            }
+        }
+    }
+
+    // Function to save transactions to Firestore
+    fun saveTransactionsToFirestore(transactions: List<ShoppingItem>) {
+        val transactionsMap = transactions.map {
+            mapOf(
+                "id" to it.id,
+                "description" to it.description,
+                "amount" to it.amount
+            )
+        }
+        userDocument?.update("transactions", transactionsMap)
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
-    ){
-Spacer(modifier = Modifier.size(100.dp))
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-            Text(text = "Personal Finance Tracker", fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold,
-                fontSize =26.sp)
+    ) {
+        Spacer(modifier = Modifier.size(100.dp))
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Text(
+                text = "Personal Finance Tracker",
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                fontSize = 26.sp
+            )
         }
 
         Spacer(modifier = Modifier.size(50.dp))
-        Button(onClick = {showDialog=true}, modifier= Modifier.align(Alignment.CenterHorizontally)) {
+        Button(onClick = { showDialog = true }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Add Transaction")
         }
 
         LazyColumn(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-        ){
-            items(sItems){
-                    item -> // rename it with item
-                if(item.isEditing){
-                    ShoppingItemEditor(item = item , onEditComplete = {
-                            editedName, editedQuantity ->
-                        sItems = sItems.map { it.copy(isEditing=false) }
+        ) {
+            items(sItems) { item ->
+                if (item.isEditing) {
+                    ShoppingItemEditor(item = item, onEditComplete = { editedName, editedQuantity ->
+                        sItems = sItems.map { it.copy(isEditing = false) }
                         val editedItem = sItems.find { it.id == item.id }
                         editedItem?.let {
-                            it.name = editedName
-                            it.quantity = editedQuantity
+                            it.description = editedName
+                            it.amount = editedQuantity
 
+                            // Save transactions to Firestore
+                            saveTransactionsToFirestore(sItems)
                         }
                     })
-                }else{
-                    ShoppingListItem(item = item,
-                        onEditClick = {
-                            sItems = sItems.map { it.copy(isEditing = it.id==item.id) } // Finding out which item is being edited and changing isEditing to true
-                        }, onDeleteClick = {
-                            sItems = sItems - item
-                        })
+                } else {
+                    ShoppingListItem(item = item, onEditClick = {
+                        sItems = sItems.map { it.copy(isEditing = it.id == item.id) }
+                    }, onDeleteClick = {
+                        sItems = sItems - item
+
+                        // Save transactions to Firestore
+                        saveTransactionsToFirestore(sItems)
+                    })
                 }
-
             }
-
         }
-
     }
 
-    if(showDialog){
-        AlertDialog(onDismissRequest = { showDialog=false },
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
             confirmButton = {
-                Row(modifier= Modifier
-                    .padding(8.dp),
+                Row(
+                    modifier = Modifier.padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     Button(onClick = {
-                        if(itemName.isNotBlank()){
+                        if (itemName.isNotBlank()) {
                             val newItem = ShoppingItem(
-                                id= sItems.size+1,
-                                name = itemName,
-                                quantity = itemQuantity.toInt(),
-
-                                )
+                                id = sItems.size + 1,
+                                description = itemName,
+                                amount = itemQuantity.toInt()
+                            )
                             sItems = sItems + newItem
-                            showDialog=false
-                            itemName=""
-                            itemQuantity=""
+                            showDialog = false
+                            itemName = ""
+                            itemQuantity = ""
+
+                            // Save transactions to Firestore
+                            saveTransactionsToFirestore(sItems)
                         }
                     }) {
                         Text("Add")
                     }
 
-                    Button(onClick = { showDialog=false}) {
+                    Button(onClick = { showDialog = false }) {
                         Text("Cancel")
                     }
                 }
             },
-            title= {Text("Add Your Transaction")},
+            title = { Text("Add Your Transaction") },
             text = {
                 Column {
-                    OutlinedTextField(value = itemName,
-                        onValueChange = {itemName = it},
+                    OutlinedTextField(
+                        value = itemName,
+                        onValueChange = { itemName = it },
                         singleLine = true,
                         modifier = Modifier.padding(8.dp)
                     )
 
-                    OutlinedTextField(value = itemQuantity,
-                        onValueChange = {itemQuantity = it},
+                    OutlinedTextField(
+                        value = itemQuantity,
+                        onValueChange = { itemQuantity = it },
                         singleLine = true,
                         modifier = Modifier.padding(8.dp)
                     )
-
                 }
             }
         )
-
     }
-
 }
 
 @Composable
-fun ShoppingItemEditor(item: ShoppingItem, onEditComplete: (String, Int) -> Unit){
-    var editedName by remember { mutableStateOf(item.name)}
-    var editedQuantity by remember { mutableStateOf(item.quantity.toString())}
-    var isEditing by remember { mutableStateOf(item.isEditing)}
+fun ShoppingItemEditor(item: ShoppingItem, onEditComplete: (String, Int) -> Unit) {
+    var editedName by remember { mutableStateOf(item.description) }
+    var editedQuantity by remember { mutableStateOf(item.amount.toString()) }
+    var isEditing by remember { mutableStateOf(item.isEditing) }
 
-    Row(modifier= Modifier
-        .fillMaxWidth()
-        .background(Color.White)
-        .padding(8.dp),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
-    ){
-        Column{
-            OutlinedTextField(value = editedName, onValueChange = {editedName = it},
-                label ={(Text(text = "Description"))},  singleLine = true,
-                modifier= Modifier
-                    .wrapContentSize() // only take as space as needed
-                    .padding(8.dp) )
+    ) {
+        Column {
+            OutlinedTextField(
+                value = editedName, onValueChange = { editedName = it },
+                label = { Text("Description") }, singleLine = true,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(8.dp)
+            )
 
-            OutlinedTextField(value = editedQuantity, onValueChange = {editedQuantity=it},
-                label ={(Text(text = "Amount"))},  singleLine = true,
-                modifier= Modifier
-                    .wrapContentSize() // only take as space as needed
-                    .padding(8.dp) )
+            OutlinedTextField(
+                value = editedQuantity, onValueChange = { editedQuantity = it },
+                label = { Text("Amount") }, singleLine = true,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(8.dp)
+            )
         }
 
         Button(onClick = {
-            isEditing=false
+            isEditing = false
             onEditComplete(editedName, editedQuantity.toIntOrNull() ?: 1)
-        }){
+        }) {
             Text("Save")
         }
-
     }
 }
 
 @Composable
-fun ShoppingListItem(item: ShoppingItem,
-                     onEditClick: () -> Unit, // Unit = Void in Java
-                     onDeleteClick: () -> Unit
-){
-
+fun ShoppingListItem(item: ShoppingItem, onEditClick: () -> Unit, onDeleteClick: () -> Unit) {
     Row(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
             .border(
-                border = BorderStroke(2.dp, Color.Cyan), // BorderStroke is a line
+                border = BorderStroke(2.dp, Color.Cyan),
                 shape = RoundedCornerShape(20)
             ),
-        horizontalArrangement =  Arrangement.SpaceBetween
-    ){
-        Column (modifier = Modifier
-            .weight(1f)
-            .padding(8.dp)){
-            Row{
-                Text(text = item.name, modifier=Modifier.padding(8.dp))
-                Text("Amount: ${item.quantity}", modifier=Modifier.padding(8.dp))
-
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp)
+        ) {
+            Row {
+                Text(text = item.description, modifier = Modifier.padding(8.dp))
+                Text("Amount: ${item.amount}", modifier = Modifier.padding(8.dp))
             }
-
-
-
         }
 
-
         Row(
-            modifier= Modifier.padding(8.dp)
-        ){
-            IconButton(onClick = onEditClick){
+            modifier = Modifier.padding(8.dp)
+        ) {
+            IconButton(onClick = onEditClick) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null)
             }
-            IconButton(onClick = onDeleteClick){
+            IconButton(onClick = onDeleteClick) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
             }
         }
     }
-
-
 }

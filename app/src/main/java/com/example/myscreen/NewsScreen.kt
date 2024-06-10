@@ -1,12 +1,17 @@
 package com.example.myscreen
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -14,7 +19,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,57 +37,69 @@ import coil.compose.rememberImagePainter
 import com.example.myscreen.ui.theme.green
 
 
+
 @Composable
-fun NewsScreen(newsViewModel: NewsViewModel) {
+fun NewsScreen(newsViewModel: NewsViewModel, context: Context) {
     // Observe news articles using viewModel
     val newsState = newsViewModel.news.collectAsState()
     val news = newsState.value
+    val selectedArticleUrl by newsViewModel.selectedArticleUrl.collectAsState()
 
+    var searchQuery by remember { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+       Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Trending News",
             fontWeight = FontWeight.Bold,
             fontSize = 28.sp,
             modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
         )
-        // Pass the observed news articles to the content
-        NewsContent(news = news) { /* Handle item click if needed */ }
-    }
-}
+        // Search bar
+        TextField(
+            value = searchQuery,
+            onValueChange = { query ->
+                searchQuery = query
+                newsViewModel.searchNews(query)
+            },
+            label = { Text("Search News") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
 
-@Composable
-fun NewsContent(news: List<Article>, onItemClick: (Article) -> Unit) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(news) { article ->
-            NewsItem(article, onItemClick)
+        // Pass the observed news articles to the content
+        NewsContent(news = news, newsViewModel = newsViewModel)
+        LaunchedEffect(selectedArticleUrl) {
+            if (!selectedArticleUrl.isNullOrEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(selectedArticleUrl))
+                context.startActivity(intent)
+            }
         }
     }
 }
 
 @Composable
+fun NewsContent(news: List<Article>, newsViewModel: NewsViewModel) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(news) { article ->
+            NewsItem(article = article, onItemClick = { newsViewModel.onArticleClicked(it.url) })
+        }
+    }
+}
+@Composable
 fun NewsItem(article: Article, onItemClick: (Article) -> Unit) {
     var isSelected by remember { mutableStateOf(false) }
-    val previouslySelected = remember { mutableStateOf<Article?>(null) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (isSelected) {
-                    isSelected = false
-                    previouslySelected.value = null
-                } else {
-                    isSelected = true
-                    previouslySelected.value?.let { previouslySelectedItem ->
-                        isSelected = false
-                    }
-                    previouslySelected.value = article
-                }
+                isSelected = !isSelected
                 onItemClick(article)
             }
             .padding(16.dp)
             .background(if (isSelected) green.copy(alpha = 0.2f) else Color.Transparent)
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .size(130.dp)
@@ -91,35 +110,32 @@ fun NewsItem(article: Article, onItemClick: (Article) -> Unit) {
                     painter = rememberImagePainter(imageUrl),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-
                 )
             }
         }
-        Box(
+
+        Column(
             modifier = Modifier
                 .wrapContentSize()
                 .padding(start = 140.dp)
         ) {
-            Column {
+            Text(
+                text = article.title,
+                style = MaterialTheme.typography.titleMedium,
+                color = if (isSelected) Color.Black else Color.Black
+            )
+            article.description?.let { description ->
                 Text(
-                    text = article.title,
-                    style = MaterialTheme.typography.titleMedium,
+                    text = description,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = if (isSelected) Color.Black else Color.Gray
+                )
+                Text(
+                    text = article.url,
+                    style = MaterialTheme.typography.titleSmall,
                     color = if (isSelected) Color.Black else Color.Black
                 )
-                article.description?.let { description ->
-                    Text(
-                        text = description,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = if (isSelected) Color.Black else Color.Gray
-                    )
-                    Text(
-                        text = article.url,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = if (isSelected) Color.Black else Color.Black
-                    )
-                }
             }
         }
     }
 }
-

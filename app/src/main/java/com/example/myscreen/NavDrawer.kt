@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -218,7 +219,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     CalculationPage(navController =navigationController )
                 }
                 composable(Routes.BudgetTracker){
-                    BudgetTracker()
+                    BudgetTracker(auth=auth)
                 }
                 composable(Routes.AdultScreen){
                     AdultScreen(navController =navigationController)
@@ -252,24 +253,49 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     KidsScreen(navController =navigationController)
                 }
                 composable(Routes.LearningPage){
-                    val data = listOf(
+                    val easyData = listOf(
                         Triple("Importance of Saving", "The power of Saving",  R.drawable.piggy),
                         Triple("How do you Save?", "Mastering art of Saving", R.drawable.howdoyousave),
                         Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
                         Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
-                        Triple("Emergency Fund", "Emergency fund",  R.drawable.emergencyfund),
-                        Triple("Types Of Savings Accounts", "Exploring different Options", R.drawable.typesofsaving),
-                        Triple("Savings on Everyday Expenses", "Strategies for it",R.drawable.savingeverydayexpenses ),
-                        Triple("Credit vs Debit", "Difference", R.drawable.creditvsdebit)
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
                         // Add more rows as needed
                     )
-                    Table(data = data,navController =navigationController)
+
+                    val mediumData = listOf(
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                    )
+
+                    val hardData = listOf(
+                        Triple("Emergency Fund", "Emergency fund",  R.drawable.emergencyfund),
+                        Triple("Types Of Savings Accounts", "Exploring different Options", R.drawable.typesofsaving),
+                        // Add more rows as needed
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                    )
+
+                    val levels = listOf(
+                        "Easy" to easyData,
+                        "Medium" to mediumData,
+                        "Hard" to hardData
+                    )
+
+                    Table(levels = levels, navController = navigationController)
+
+
                 }
                 composable(Routes.NewsScreen){
                     val newsViewModel = NewsViewModel()
-
+                    val context = LocalContext.current
                     // Pass NewsViewModel to NewsScreen
-                    NewsScreen(newsViewModel = newsViewModel)
+                    NewsScreen(newsViewModel = newsViewModel,context)
                 }
             }
 
