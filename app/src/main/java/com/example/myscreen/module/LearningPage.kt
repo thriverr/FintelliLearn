@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.module
 
 
 
@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myscreen.R
+import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.bluee
 
 

@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.Firebase
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +39,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myscreen.R
+import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 import com.google.firebase.auth.FirebaseAuth

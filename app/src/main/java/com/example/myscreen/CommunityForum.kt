@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.Purple80
 import com.example.myscreen.ui.theme.bluee
 import com.example.myscreen.ui.theme.brown

@@ -1,9 +1,10 @@
-package com.example.myscreen
+package com.example.myscreen.Firebase
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myscreen.navigation.Routes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -12,7 +13,7 @@ fun AppNavigator(auth: FirebaseAuth, db: FirebaseFirestore) {
     val navController = rememberNavController()
 
     // Define the navigation graph using NavHost
-    NavHost(navController = navController, startDestination =Routes.FintelliLearn) {
+    NavHost(navController = navController, startDestination = Routes.FintelliLearn) {
         // Sign-in page destination
         composable(Routes.SignInPage) {
             SignInPage(navController = navController)
@@ -25,7 +26,7 @@ fun AppNavigator(auth: FirebaseAuth, db: FirebaseFirestore) {
 
         // Welcome page destination
         composable(
-           Routes.WelcomePage
+            Routes.WelcomePage
         ) {
 WelcomePage(auth = auth, db =db )
         }

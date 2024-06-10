@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.calculators
 
 
 import androidx.compose.foundation.layout.Column

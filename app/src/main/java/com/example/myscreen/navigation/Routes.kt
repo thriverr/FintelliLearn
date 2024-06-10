@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.navigation
 
 object Routes {
     const val SignInPage = "signInPage"

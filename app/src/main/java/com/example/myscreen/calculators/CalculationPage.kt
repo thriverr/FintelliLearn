@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.calculators
 
 
 
@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.myscreen.navigation.Routes
 
 @Composable
 fun CalculationPage(navController: NavController) {

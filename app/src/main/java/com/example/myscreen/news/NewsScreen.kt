@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.news
 
 import android.content.Context
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 

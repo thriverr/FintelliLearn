@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.Firebase
 
 import com.google.firebase.auth.FirebaseAuth
 

@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.news
 
 import retrofit2.http.GET
 import retrofit2.http.Query

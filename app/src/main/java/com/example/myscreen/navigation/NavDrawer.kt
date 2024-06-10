@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.navigation
 
 import ImpOfSavingArticle
 import android.annotation.SuppressLint
@@ -44,6 +44,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myscreen.AIBot.Bot
+import com.example.myscreen.AboutProfile
+import com.example.myscreen.AddPostScreen
+import com.example.myscreen.BudgetTracker
+import com.example.myscreen.CommunityForum
+import com.example.myscreen.Firebase.SignInPage
+import com.example.myscreen.R
+import com.example.myscreen.articles.CreditPage
+import com.example.myscreen.articles.DefaultDestination
+import com.example.myscreen.calculators.CalculationPage
+import com.example.myscreen.calculators.CompoundInterestCalculator
+import com.example.myscreen.module.Table
+import com.example.myscreen.news.NewsScreen
+import com.example.myscreen.news.NewsViewModel
+import com.example.myscreen.screens.AdultScreen
+import com.example.myscreen.screens.AgeScreen
+import com.example.myscreen.screens.KidsScreen
+import com.example.myscreen.module.VideoPlay
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 import com.google.firebase.auth.FirebaseAuth
@@ -202,7 +219,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
             }
         ) {
 
-            NavHost(navController = navigationController, startDestination =Routes.AgeScreen  ){
+            NavHost(navController = navigationController, startDestination = Routes.AgeScreen  ){
                 composable(Routes.AgeScreen){
                     AgeScreen(navController = navigationController)
                 }
@@ -230,7 +247,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 composable(Routes.Bot){
                     Bot()
                 }
-                composable(Routes.AboutProfile
+                composable(
+                    Routes.AboutProfile
                     ) {
                     AboutProfile( currentUser = auth.currentUser!!)
                 }
@@ -254,31 +272,49 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 }
                 composable(Routes.LearningPage){
                     val easyData = listOf(
-                        Triple("Importance of Saving", "The power of Saving",  R.drawable.piggy),
-                        Triple("How do you Save?", "Mastering art of Saving", R.drawable.howdoyousave),
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Importance of Saving", "The power of Saving", R.drawable.piggy),
+                        Triple("How do you Save?", "Mastering art of Saving",
+                            R.drawable.howdoyousave
+                        ),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
                         // Add more rows as needed
                     )
 
                     val mediumData = listOf(
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
                     )
 
                     val hardData = listOf(
-                        Triple("Emergency Fund", "Emergency fund",  R.drawable.emergencyfund),
-                        Triple("Types Of Savings Accounts", "Exploring different Options", R.drawable.typesofsaving),
+                        Triple("Emergency Fund", "Emergency fund", R.drawable.emergencyfund),
+                        Triple("Types Of Savings Accounts", "Exploring different Options",
+                            R.drawable.typesofsaving
+                        ),
                         // Add more rows as needed
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
-                        Triple("Setting Savings Goals", "Saving goals",R.drawable.settinggoals ),
-                        Triple("Creating A budget with Savings", "Creating budget with Savings", R.drawable.budgetsaving),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
+                        Triple("Setting Savings Goals", "Saving goals", R.drawable.settinggoals),
+                        Triple("Creating A budget with Savings", "Creating budget with Savings",
+                            R.drawable.budgetsaving
+                        ),
                     )
 
                     val levels = listOf(

@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.news
 
 data class NewsResponse(
     val articles: List<Article>

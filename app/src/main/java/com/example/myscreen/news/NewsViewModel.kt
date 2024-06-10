@@ -1,4 +1,4 @@
-package com.example.myscreen
+package com.example.myscreen.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
