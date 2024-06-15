@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myscreen.ui.theme.Purple_200
+import com.example.myscreen.ui.theme.lightgrey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -243,7 +245,7 @@ fun ShoppingListItem(item: ShoppingItem, onEditClick: () -> Unit, onDeleteClick:
             .padding(8.dp)
             .fillMaxWidth()
             .border(
-                border = BorderStroke(2.dp, Color.Cyan),
+                border = BorderStroke(2.dp, Purple_200),
                 shape = RoundedCornerShape(20)
             ),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -254,8 +256,11 @@ fun ShoppingListItem(item: ShoppingItem, onEditClick: () -> Unit, onDeleteClick:
                 .padding(8.dp)
         ) {
             Row {
-                Text(text = item.description, modifier = Modifier.padding(8.dp))
-                Text("Amount: ${item.amount}", modifier = Modifier.padding(8.dp))
+                Text(text = item.description, modifier = Modifier.padding(8.dp), fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold)
+                Text("Amount: ${item.amount}", modifier = Modifier.padding(8.dp),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold)
             }
         }
 
@@ -263,10 +268,12 @@ fun ShoppingListItem(item: ShoppingItem, onEditClick: () -> Unit, onDeleteClick:
             modifier = Modifier.padding(8.dp)
         ) {
             IconButton(onClick = onEditClick) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+                Icon(imageVector = Icons.Default.Edit, contentDescription = null,
+                    modifier=Modifier.background(lightgrey))
             }
             IconButton(onClick = onDeleteClick) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                Icon(imageVector = Icons.Default.Delete, contentDescription = null,
+                    modifier=Modifier.background(lightgrey))
             }
         }
     }

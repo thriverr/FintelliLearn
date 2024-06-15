@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddPhotoAlternate
+import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
@@ -55,6 +57,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.myscreen.ui.theme.blue
+import com.example.myscreen.ui.theme.grey
 
 @Composable
 fun Bot(){
@@ -67,19 +70,21 @@ fun Bot(){
     )
 
     Scaffold(
+
         topBar = {
+            Spacer(modifier = Modifier.height(60.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.primary)
-                    .height(35.dp)
+                    .height(75.dp)
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
                     modifier = Modifier
                         .align(Alignment.Center),
                     text = "Financial Advisory Bot",
-                    fontSize = 19.sp,
+                    fontSize = 24.sp,
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimary
@@ -87,6 +92,25 @@ fun Bot(){
             }
         }
     ) {
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center){
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Welcome to Financial Health",
+                    fontWeight = FontWeight.SemiBold,
+                    color = grey,
+                    fontSize = 24.sp
+                )
+                Text(
+                    text = "Assessment Bot!",
+                    fontWeight = FontWeight.SemiBold,
+                    color = grey,
+                    fontSize = 24.sp
+                )
+            }
+        }
         ChatScreen(
             paddingValues = it,
             uriState = uriState,
@@ -182,10 +206,21 @@ fun ChatScreen(
             )
 
             Spacer(modifier = Modifier.width(8.dp))
-
             Icon(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(34.dp)
+                    .clickable {
+                        // Handle microphone click event
+                    },
+                imageVector = Icons.Rounded.Mic,
+                contentDescription = "Microphone",
+                tint = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.width(6.dp))
+            Icon(
+                modifier = Modifier
+                    .size(34.dp)
                     .clickable {
                         chaViewModel.onEvent(ChatUiEvent.SendPrompt(chatState.prompt, bitmap))
                         uriState.value = null
@@ -269,4 +304,9 @@ private fun getBitmap(uri: Uri?): Bitmap? {
     }
 
     return null
+}
+@Composable
+@Preview
+fun BotPreview() {
+    Bot()
 }

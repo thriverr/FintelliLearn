@@ -36,10 +36,10 @@ fun AgeScreen(navController: NavController){
             .background(backgroundColor)
             .verticalScroll(scrollState)
     ) {
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(82.dp))
         Box(modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center){
-            Text(text = "Empower Your Financial Journey",
+            Text(text = "Empower Your Learning Journey",
                 fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
         Box(modifier = Modifier.fillMaxWidth(),
