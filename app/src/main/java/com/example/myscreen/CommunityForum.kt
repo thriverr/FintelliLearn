@@ -50,7 +50,6 @@ import com.example.myscreen.ui.theme.Purple80
 import com.example.myscreen.ui.theme.bluee
 import com.example.myscreen.ui.theme.brown
 import com.example.myscreen.ui.theme.darkgrey
-import com.example.myscreen.ui.theme.darkkgrey
 import com.example.myscreen.ui.theme.grey
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -412,7 +411,7 @@ fun PostItem(
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Text(text = ":${post.score}", color = darkkgrey)
+                Text(text = ":${post.score}", color = Color.Black, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.width(40.dp))
                 if (currentUserFirstName == post.userFirstName) {
                     IconButton(onClick = onDelete) {

@@ -63,7 +63,6 @@ import com.example.myscreen.news.NewsViewModel
 import com.example.myscreen.screens.AdultScreen
 import com.example.myscreen.screens.AgeScreen
 import com.example.myscreen.screens.KidsScreen
-import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -91,11 +90,12 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     contentAlignment = Alignment.Center
                 ){
 
-                    Text(text = "Dashboard", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                    Text(text = "Dashboard", fontSize = 20.sp, fontWeight = FontWeight.Bold,
                         color = Color.White)
                 }
                 Divider()
-                NavigationDrawerItem(label = { Text(text = "Home", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Home", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Home, contentDescription ="Home" ) },
                     onClick = {
@@ -107,7 +107,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
 
                         }
                     })
-                NavigationDrawerItem(label = { Text("Your Profile", color = Color.Black) },
+                NavigationDrawerItem(label = { Text("Your Profile", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Your Profile") },
                     onClick = {
@@ -118,7 +119,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "News", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "News", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Newspaper, contentDescription ="News" ) },
                     onClick = {
@@ -129,7 +131,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "Budget Tracker", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Budget Tracker", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.ArtTrack, contentDescription ="Budget Tracker" ) },
                     onClick = {
@@ -140,7 +143,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "Community Forum", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Community Forum", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Forum, contentDescription =" Community Forum" ) },
                     onClick = {
@@ -151,7 +155,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "Finanial Calculator", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Financial Calculator", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Calculate, contentDescription ="Financial Calculator" ) },
                     onClick = {
@@ -162,7 +167,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "Financial Health Assessment Bot", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Financial Health Assessment Bot", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.ChatBubbleOutline, contentDescription ="Financial Health Assessment Bot" ) },
                     onClick = {
@@ -173,7 +179,8 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             popUpTo(0)
                         }
                     })
-                NavigationDrawerItem(label = { Text(text = "Logout", color = Color.Black) },
+                NavigationDrawerItem(label = { Text(text = "Logout", color = Color.Black,
+                    fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selected =false ,
                     icon = { Icon(imageVector = Icons.Default.Logout, contentDescription ="Logout" ) },
                     onClick = {
@@ -198,11 +205,11 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(BgBlueColor),
+                            .background(Purple_200),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Finshaala!", fontFamily = FontFamily.Serif, fontSize = 20.sp
-                            , fontWeight = FontWeight.Bold
+                        Text(text = "Finshaala!", fontFamily = FontFamily.Default, fontSize = 28.sp
+                            , fontWeight = FontWeight.Bold, color = Color.White
                         )
                     }
                 }
@@ -263,7 +270,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 composable(Routes.CreditPage){
                     CreditPage()
                 }
-                composable(Routes.SavingAccount){
+                composable(Routes.SavingsAccount){
                     SavingsAccount()
                 }
                 composable(Routes.TypesOfSavings){
@@ -321,9 +328,9 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     )
 
                     val levels = listOf(
-                        "Easy" to easyData,
-                        "Medium" to mediumData,
-                        "Hard" to hardData
+                        "Beginner" to easyData,
+                        "Intermediate" to mediumData,
+                        "Advance" to hardData
                     )
 
                     Table(levels = levels, navController = navigationController)

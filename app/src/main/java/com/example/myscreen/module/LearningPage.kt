@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.ArrowDropUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,15 +36,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myscreen.R
 import com.example.myscreen.navigation.Routes
+import com.example.myscreen.ui.theme.Purple_200
+import com.example.myscreen.ui.theme.advancecolor
+import com.example.myscreen.ui.theme.beginnercolor
 import com.example.myscreen.ui.theme.bluee
+import com.example.myscreen.ui.theme.intermediatecolor
 
 
 @Composable
@@ -55,7 +67,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
             put("Mastering art of Saving", Routes.CreditPage)
             put("Savings Goals", Routes.CreditPage)
             put("Needs or Wants?", Routes.CreditPage)
-            put("Savings Account", Routes.SavingAccount)
+            put("Savings Account", Routes.SavingsAccount)
             put("Track Saving Goals", Routes.CreditPage)
             put("Explore Interests", Routes.CreditPage)
             put("Financial Terms", Routes.CreditPage)
@@ -93,9 +105,13 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
         ) {
             Text(
                 text = "Savings",
-                fontSize = 28.sp,
+                fontSize = 38.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif, color = bluee
+                fontFamily = FontFamily.Default, color = Purple_200,
+                        style = TextStyle(
+
+                textDecoration = TextDecoration.Underline
+            ),
             )
         }
         Spacer(modifier = Modifier.size(24.dp))
@@ -126,31 +142,60 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
             )
         }
 
+
         levels.forEach { (level, data) ->
             val expanded = level == expandedLevel
 
             Column {
-                Row(
+                val bgColor = if (expanded) {
+                    when (level) {
+                        "Beginner" -> beginnercolor // Blue for buttons
+                        "Intermediate" -> intermediatecolor
+                        "Hard" -> advancecolor
+                        else -> bluee // Default color if none of the above levels match
+                    }
+                     // Background color when expanded
+                } else {
+                    bluee
+                }
+
+                Button(
+                    onClick = {
+                        expandedLevel = if (expanded) null else level
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                       bgColor,
+                        contentColor = Color.White // Text color when button is colored
+                    ),
+                    shape = RectangleShape,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            expandedLevel = if (expanded) null else level
-                        }
-                        .padding(vertical = 12.dp).background(bluee),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+
+                        .padding(vertical = 12.dp)
+
+                        .padding(horizontal = 16.dp).padding(start=80.dp,end=80.dp).fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+
                 ) {
-                    Text(
-                        text = level,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold, color = Color.White,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                    Icon(
-                        imageVector = if (expanded) Icons.Outlined.ArrowDropUp else Icons.Outlined.ArrowDropDown,
-                        contentDescription = "Arrow", tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = level,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+
+                            )
+                        Icon(
+                            imageVector = if (expanded) Icons.Outlined.ArrowDropUp
+                            else Icons.Outlined.ArrowDropDown,
+                            contentDescription = "Expand",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
 
                 if (expanded) {
@@ -201,4 +246,24 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
             }
         }
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun PreviewTable() {
+    val navController = rememberNavController()
+    val sampleLevels = listOf(
+        "Beginner" to listOf(
+            Triple("Introduction to Saving", "The power of Saving", R.drawable.piggy),
+            Triple("How to Save", "Mastering art of Saving", R.drawable.allowance)
+        ),
+        "Intermediate" to listOf(
+            Triple("Savings Goals", "Savings Goals", R.drawable.shortgoal),
+            Triple("Needs or Wants?", "Needs or Wants?", R.drawable.needswants)
+        ),
+        "Hard" to listOf(
+            Triple("Long term goals", "Long term goals", R.drawable.longsave),
+            Triple("Explore Investing", "Explore Investing", R.drawable.investing)
+        )
+    )
+    Table(levels = sampleLevels, navController = navController)
 }

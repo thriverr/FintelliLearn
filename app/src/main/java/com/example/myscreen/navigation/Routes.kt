@@ -21,7 +21,7 @@ object Routes {
     const val CreditPage="CreditPage"
     const val DefaultDestination="DefaultDestination"
     const val AboutProfile="AboutProfile"
-    const val SavingAccount="SavingAccount"
+    const val SavingsAccount="SavingsAccount"
     const val TypesOfSavings="TypesOfSavings"
 
 }
