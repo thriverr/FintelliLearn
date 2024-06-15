@@ -59,6 +59,7 @@ fun CalculationPage(navController: NavController) {
         item {
             Button(
                 text = "Compound Calculator",
+                age="",
                 iconId = R.drawable.cicalci,
                 onClick = { navController.navigate(Routes.CompoundInterestCalculator) }
             )
@@ -69,6 +70,7 @@ fun CalculationPage(navController: NavController) {
         item {
             Button(
                 text = "Retirement Calculator",
+                age="",
                 iconId = R.drawable.retirementcalci,
                 onClick = { /* Handle click */ }
             )
@@ -79,6 +81,7 @@ fun CalculationPage(navController: NavController) {
         item {
             Button(
                 text = "Inflation Calculator",
+                age="",
                 iconId = R.drawable.inflationcalci,
                 onClick = { /* Handle click */ }
             )
@@ -87,7 +90,7 @@ fun CalculationPage(navController: NavController) {
 }
 
 @Composable
-fun Button(text: String, iconId: Int, onClick: () -> Unit) {
+fun Button(text: String, iconId: Int, onClick: () -> Unit,age:String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         IconButton(
             onClick = onClick,
@@ -102,7 +105,18 @@ fun Button(text: String, iconId: Int, onClick: () -> Unit) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyMedium,
+
+                modifier = Modifier ,// Remove the comma here
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                fontFamily = FontFamily.Default,
+
+                )
+        }
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+            Text(
+                text = age,
+
                 modifier = Modifier ,// Remove the comma here
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,

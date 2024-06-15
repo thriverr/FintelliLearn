@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,20 +14,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.BlueColor
 import com.example.myscreen.ui.theme.GreenColor
 import com.example.myscreen.ui.theme.YellowColor
+import com.example.myscreen.ui.theme.darkgrey
 import com.example.myscreen.ui.theme.lavender
 import com.example.myscreen.ui.theme.peach
 
 @Composable
 fun MyButton(
     text: String,
-    description: String,
+    description1: String,
+    description2: String,
     color: Color,
     onClick: () -> Unit,
     navController: NavController
@@ -47,20 +50,26 @@ fun MyButton(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
+                    .fillMaxSize(),
+
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = text,
-                    style = MaterialTheme.typography.headlineMedium,
+                    fontSize=22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = description,
+                    text = description1,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+                Text(
+                    text = description2,
+                    fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
             }
@@ -76,18 +85,23 @@ fun MyLazyColumn(navController: NavController) {
     ) {
         item {
             Spacer(modifier = Modifier.height(100.dp))
-            Box(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Financial Mastery Zone!",
+                    text = " Financial Mastery",
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Serif,
-                    fontSize = 28.sp
+                    fontFamily = FontFamily.Default,
+                    fontSize = 38.sp
+                )
+                Text(
+                    text = "Zone!",
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 38.sp
                 )
             }
-            Spacer(modifier = Modifier.height(50.dp))
         }
 
         item {
@@ -97,15 +111,17 @@ fun MyLazyColumn(navController: NavController) {
             ) {
                 MyButton(
 
-                    text = "Savings",
-                    description = "Unlocking Financial Freedom: Building Strong Saving Habits",
+                    text = "Savings ",
+                    description1 = "Building Strong ",
+                    description2 = "Saving Habits ",
                     color = BlueColor,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
                 )
                 MyButton(
                     text = "Budgeting",
-                    description = "Master Money Management: Essential Skills for Effective Budgeting",
+                    description1 = "Master Money",
+                    description2 ="Management Skills" ,
                     color = lavender,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -120,14 +136,16 @@ fun MyLazyColumn(navController: NavController) {
             ) {
                 MyButton(
                     text = "Quiz",
-                    description = "Test your Financial Savvy: Dive into interactive Finance Quizzes",
+                    description1 = "Dive into interactive",
+                    description2 = " Finance Quizzes",
                     color = YellowColor,
                     navController = navController,
                     onClick = {navController.navigate(Routes.quiz) }
                 )
                 MyButton(
-                    text = "Explore More",
-                    description = "Discover Additional Resources: Expand your financial knowledge",
+                    text = "Explore",
+                    description1 = "Discover More",
+                    description2 = " Financial Resource",
                     color = GreenColor,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -141,8 +159,9 @@ fun MyLazyColumn(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 MyButton(
-                    text = "Retirement       Planning",
-                    description = "Plan your retirement to stay free and happy in your old age.",
+                    text = "Retirement Planning",
+                    description1 = "Plan your retirement",
+                    description2 = "for secure future",
                     color = peach,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -150,8 +169,9 @@ fun MyLazyColumn(navController: NavController) {
                 )
                 MyButton(
                     text = "Investment",
-                    description = "Invest in resources to increase your financial wealth.",
-                    color = Color.LightGray,
+                    description1 = "Invest for better",
+                    description2 = "financial wealth",
+                    color = darkgrey,
 
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -167,4 +187,12 @@ fun AdultScreen(navController: NavController) {
     Scaffold {
         MyLazyColumn(navController = navController)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AdultScreenPreview() {
+    // Create a sample NavController for the preview
+    val navController = rememberNavController()
+    AdultScreen(navController = navController)
 }

@@ -208,7 +208,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                             .background(Purple_200),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Finshaala!", fontFamily = FontFamily.Default, fontSize = 28.sp
+                        Text(text = "Finshaala!", fontFamily = FontFamily.Default, fontSize = 26.sp
                             , fontWeight = FontWeight.Bold, color = Color.White
                         )
                     }

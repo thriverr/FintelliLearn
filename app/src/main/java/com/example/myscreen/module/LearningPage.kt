@@ -49,7 +49,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myscreen.R
 import com.example.myscreen.navigation.Routes
-import com.example.myscreen.ui.theme.Purple_200
+import com.example.myscreen.ui.theme.Pink80
 import com.example.myscreen.ui.theme.advancecolor
 import com.example.myscreen.ui.theme.beginnercolor
 import com.example.myscreen.ui.theme.bluee
@@ -107,7 +107,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                 text = "Savings",
                 fontSize = 38.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Default, color = Purple_200,
+                fontFamily = FontFamily.Default, color = Color.Black,
                         style = TextStyle(
 
                 textDecoration = TextDecoration.Underline
@@ -119,26 +119,26 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.LightGray),
+                .background(Pink80),
             horizontalArrangement = Arrangement.Center
         ) {
 
             Text(
-                text = "Topics", fontSize = 24.sp,
+                text = "Topics", fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(2f)
+                modifier = Modifier.weight(2f).align(Alignment.CenterVertically).padding(start=18.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = "Reading Reference", fontSize = 24.sp,
+                text = "Reading Reference", fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(2f)
+                modifier = Modifier.weight(2f).padding(top=12.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = "Watch & Learn", fontSize = 24.sp,
+                text = "Watch & Learn", fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).padding(end=12.dp)
             )
         }
 
@@ -151,7 +151,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                     when (level) {
                         "Beginner" -> beginnercolor // Blue for buttons
                         "Intermediate" -> intermediatecolor
-                        "Hard" -> advancecolor
+                        "Advance" -> advancecolor
                         else -> bluee // Default color if none of the above levels match
                     }
                      // Background color when expanded

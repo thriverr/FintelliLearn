@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.BlueColor
 import com.example.myscreen.ui.theme.GreenColor
@@ -36,7 +37,8 @@ fun KidsScreen(navController: NavController) {
 @Composable
 fun MButton(
     text: String,
-    description: String,
+    description1: String,
+    description2: String,
     color: Color,
     navController: NavController,
     onClick: () -> Unit,
@@ -56,19 +58,26 @@ fun MButton(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 16.dp),
+                    ,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = text,
-                    style = MaterialTheme.typography.headlineMedium,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(10.dp))
+
                 Text(
-                    text = description,
+                    text = description1,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+                Text(
+                    text = description2,
+                    fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
             }
@@ -89,13 +98,19 @@ fun MLazyColumn(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Financial Literacy for Young Minds",
+                    text = " Financial Literacy for",
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Serif,
-                    fontSize = 28.sp
+                    fontFamily = FontFamily.Default,
+                    fontSize = 38.sp
                 )
+                    Text(
+                        text = "Young Minds!",
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Default,
+                        fontSize = 38.sp
+                    )
             }
-            Spacer(modifier = Modifier.height(50.dp))
+
         }
 
         item {
@@ -105,14 +120,16 @@ fun MLazyColumn(navController: NavController) {
             ) {
                 MButton(
                     text = "Savings",
-                    description = "Unlocking Financial Freedom: Building Strong Saving Habits",
+                    description1 = " Develop Financial",
+                    description2 = "   Saving Discipline",
                     color = BlueColor,
                     navController = navController,
                     onClick = { navController.navigate(Routes.LearningPage) }
                 )
                 MButton(
                     text = "Budgeting",
-                    description = "Master Money Management: Essential Skills for Effective Budgeting",
+                    description1 = "Master Money",
+                    description2 = "Management",
                     color = lavender,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -126,15 +143,17 @@ fun MLazyColumn(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 MButton(
-                    text = "Fun Zone!",
-                    description = "Test your Financial Savvy: Dive into interactive Finance Quizzes",
+                    text = "Fun Zone",
+                    description1 = "Adventure Quest ",
+                    description2 = "Learn And Win! ",
                     color = YellowColor,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
                 )
                 MButton(
-                    text = "Explore More",
-                    description = "Discover Additional Resources: Expand your financial knowledge",
+                    text = "Explore",
+                    description1 = "More Financial",
+                    description2 = "Resources",
                     color = GreenColor,
                     navController = navController,
                     onClick = { /* Define action for clicking on Quiz button */ }
@@ -144,4 +163,11 @@ fun MLazyColumn(navController: NavController) {
 
 
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun KidsScreenPreview() {
+    // Create a sample NavController for the preview
+    val navController = rememberNavController()
+    KidsScreen(navController = navController)
 }

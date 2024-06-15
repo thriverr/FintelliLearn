@@ -18,10 +18,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -46,11 +48,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myscreen.navigation.Routes
-import com.example.myscreen.ui.theme.Purple80
+import com.example.myscreen.ui.theme.Purple40
 import com.example.myscreen.ui.theme.bluee
-import com.example.myscreen.ui.theme.brown
-import com.example.myscreen.ui.theme.darkgrey
-import com.example.myscreen.ui.theme.grey
+import com.example.myscreen.ui.theme.lightgrey
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -249,15 +249,23 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
             }
     }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(lightgrey)) {
+
         Spacer(modifier = Modifier.height(56.dp))
         TextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
-            label = { Text("Search", color = Color.Black, fontSize = 16.sp) },
+            label = { Text("Search", color = Color.Black, fontSize = 18.sp,
+                fontWeight = FontWeight.Bold) },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon"
+                )
+            },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .fillMaxWidth().background(Color.White)
+                .padding(16.dp), shape = RoundedCornerShape(100.dp)
         )
         Spacer(modifier = Modifier.height(6.dp))
         // Row of Buttons
@@ -278,7 +286,7 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 16.dp), colors = CardDefaults.cardColors(
-                containerColor = grey // Set the background color of the card here
+                containerColor = Color.White // Set the background color of the card here
             )
         ) {
             Column(
@@ -292,12 +300,12 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
                     Box(
                         modifier = Modifier
                             .size(70.dp)
-                            .background(color = darkgrey, shape = CircleShape),
+                            .background(color = Purple40, shape = CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = username?.first()?.toUpperCase().toString(),
-                            color = brown,
+                            color = Color.White,
                             fontSize = 44.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -313,14 +321,14 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
                         androidx.compose.material3.Button(
                             onClick = { navController.navigate("addPost") },
                             modifier = Modifier.fillMaxSize(),
-                            colors = ButtonDefaults.buttonColors(darkgrey),
+                            colors = ButtonDefaults.buttonColors(lightgrey),
                             shape = CircleShape,
                         ) {
                             Text(
                                 "Do you want to ask or share?",
                                 color = Color.Black,
                                 fontSize = 14.sp,
-                                fontWeight = FontWeight.SemiBold
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
@@ -333,18 +341,18 @@ fun CommunityForum(currentUser: FirebaseUser,db: FirebaseFirestore,navController
                 ) {
                     androidx.compose.material3.Button(
                         onClick = { navController.navigate("addPost") },
-                        colors = ButtonDefaults.buttonColors(darkgrey),
+                        colors = ButtonDefaults.buttonColors(Purple40),
                         shape = MaterialTheme.shapes.medium
                     ) {
-                        Text("Ask", color = Color.Black)
+                        Text("Ask", color = Color.White)
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     androidx.compose.material3.Button(
                         onClick = {  },
-                        colors = ButtonDefaults.buttonColors(darkgrey),
+                        colors = ButtonDefaults.buttonColors(Purple40),
                         shape = MaterialTheme.shapes.medium
                     ) {
-                        Text("Post", color = Color.Black)
+                        Text("Post", color = Color.White)
                     }
                 }
             }
@@ -385,7 +393,7 @@ fun PostItem(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(containerColor = Purple80)
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(
