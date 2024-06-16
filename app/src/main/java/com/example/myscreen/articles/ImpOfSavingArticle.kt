@@ -1,7 +1,6 @@
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,14 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myscreen.R
-import com.example.myscreen.ui.theme.Pink80
 import com.example.myscreen.ui.theme.Purple40
 
 @Composable
 
 fun ImpOfSavingArticle() {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(Pink80),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -82,9 +80,9 @@ fun ImpOfSavingArticle() {
         }
 
         items(sections) { section ->
-            val backgroundColor = Pink80
+
             Box(
-                modifier = Modifier.background(backgroundColor),
+                modifier = Modifier,
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column {

@@ -2,6 +2,8 @@ package com.example.myscreen.module
 
 
 
+
+
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -64,41 +66,41 @@ import com.google.firebase.firestore.firestore
 
 @Composable
 
-fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navController: NavController) {
+fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navController: NavController) {
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { }
     val destinationMap = remember {
         mutableMapOf<String, String>().apply {
             // Define your mapping here
-            put("The power of Saving", Routes.ImpOfSavingArticle)
-            put("Mastering art of Saving", Routes.CreditPage)
-            put("Savings Goals", Routes.CreditPage)
-            put("Needs or Wants?", Routes.CreditPage)
-            put("Savings Account", Routes.SavingsAccount)
-            put("Track Saving Goals", Routes.CreditPage)
-            put("Explore Interests", Routes.CreditPage)
-            put("Financial Terms", Routes.CreditPage)
-            put("Exploring Savings Accounts", Routes.TypesOfSavings)
-            put("Long term goals", Routes.CreditPage)
-            put("Explore Investing", Routes.CreditPage)
-            put("Credit & Debt management", Routes.CreditPage)
+            put("What is Budget?", Routes.ImpOfSavingArticle)
+            put("Learn About Tracking", Routes.CreditPage)
+            put("Create Your Budget", Routes.CreditPage)
+            put("Remove Unnecessary Expenses", Routes.CreditPage)
+            put("Have A Budgeting Plan!", Routes.SavingsAccount)
+            put("Budgeting Methods", Routes.CreditPage)
+            put("Handle Irregular Expenses", Routes.CreditPage)
+            put("Emergency Funds", Routes.CreditPage)
+            put("Planning Future Expenses", Routes.TypesOfSavings)
+            put("Strategies to Repay Debt", Routes.CreditPage)
+            put("Know About Self Employment", Routes.CreditPage)
+            put("Reduce Tax Liabilities", Routes.CreditPage)
         }
     }
 
     val youtubeLinkMap = remember {
         mutableMapOf<Int, String>().apply {
             // Define your mapping here
-            put(R.drawable.piggy, "https://www.youtube.com/watch?v=JkCmIxraWlM")
-            put( R.drawable.allowance, "https://www.youtube.com/watch?v=NfurkrZEn3Q")
-            put( R.drawable.shortgoal, "https://www.youtube.com/watch?v=v-mlEQ7KW5Q&t=4s")
-            put( R.drawable.needswants, "https://www.youtube.com/watch?v=9ZxpWI1rDTE")
-            put(R.drawable.savingsac, "https://www.youtube.com/watch?v=HsXAvH3D7wY")
-            put( R.drawable.savetrack, "https://www.youtube.com/watch?v=Duxo4xXeMec")
-            put(R.drawable.interest, "https://www.youtube.com/watch?v=8edPzh71RIQ")
-            put( R.drawable.financeterms, "https://www.youtube.com/watch?v=E2wcbUNZ-yo")
-            put( R.drawable.typesofsaving, "https://www.youtube.com/watch?v=fzAoV0rkizI")
-            put(  R.drawable.longsave, " https://www.youtube.com/watch?v=jLojCtQPmbk")
-            put(R.drawable.investing, "https://www.youtube.com/watch?v=qIw-yFC-HNU")
-            put( R.drawable.debtmanage, "https://www.youtube.com/watch?v=Wh44hyYLnS4")
+            put (R.drawable.introbudget, "https://www.youtube.com/watch?v=CbhjhWleKGE")
+            put( R.drawable.trackingfinance, "https://www.youtube.com/watch?v=NfurkrZEn3Q")
+            put( R.drawable.basicbudget, "https://www.youtube.com/watch?v=v-mlEQ7KW5Q&t=4s")
+            put( R.drawable.cuttingexpenses, "https://www.youtube.com/watch?v=9ZxpWI1rDTE")
+            put(R.drawable.budgetingplan, "https://www.youtube.com/watch?v=Epk1SQr9lmE")
+            put( R.drawable.budgetingrule, "https://www.youtube.com/watch?v=Duxo4xXeMec")
+            put(R.drawable.irregularexpense, "https://www.youtube.com/watch?v=8edPzh71RIQ")
+            put( R.drawable.emergency, "https://www.youtube.com/watch?v=E2wcbUNZ-yo")
+            put( R.drawable.forecasting, "https://www.youtube.com/watch?v=Awm_LxHbHHE")
+            put(  R.drawable.strategiesbudgeting, " https://www.youtube.com/watch?v=jLojCtQPmbk")
+            put(R.drawable.selfemployment, "https://www.youtube.com/watch?v=qIw-yFC-HNU")
+            put( R.drawable.taxplanning, "https://www.youtube.com/watch?v=Wh44hyYLnS4")
         }
     }
 
@@ -114,7 +116,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
         userDocument.get().addOnSuccessListener { document ->
             if (document.exists()) {
                 // Retrieve progress if document exists
-                val progressMap = document.data?.get("topicStatus") as? Map<String, Boolean>
+                val progressMap = document.data?.get("budgetStatus") as? Map<String, Boolean>
                 if (progressMap != null) {
                     // Calculate initial progress based on stored values
                     val markedCount = progressMap.count { it.value }
@@ -122,7 +124,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                 }
             } else {
                 // Initialize progress if document doesn't exist
-                userDocument.set(mapOf("topicStatus" to emptyMap<String, Boolean>()))
+                userDocument.set(mapOf("budgetStatus" to emptyMap<String, Boolean>()))
             }
         }
     }
@@ -137,10 +139,10 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                 fontSize = 38.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Default, color = Color.Black,
-                        style = TextStyle(
+                style = TextStyle(
 
-                textDecoration = TextDecoration.Underline
-            ),
+                    textDecoration = TextDecoration.Underline
+                ),
             )
         }
         Spacer(modifier = Modifier.size(24.dp))
@@ -183,7 +185,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                         "Advance" -> advancecolor
                         else -> bluee // Default color if none of the above levels match
                     }
-                     // Background color when expanded
+                    // Background color when expanded
                 } else {
                     bluee
                 }
@@ -193,7 +195,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                         expandedLevel = if (expanded) null else level
                     },
                     colors = ButtonDefaults.buttonColors(
-                       bgColor,
+                        bgColor,
                         contentColor = Color.White // Text color when button is colored
                     ),
                     shape = RectangleShape,
@@ -204,7 +206,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                         .padding(horizontal = 16.dp).padding(start=80.dp,end=80.dp).fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp),
 
-                ) {
+                    ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
@@ -235,7 +237,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                             // Load the topic status from Firestore
                             LaunchedEffect(rowData.first) {
                                 userDocument.get().addOnSuccessListener { document ->
-                                    val progressMap = document.data?.get("topicStatus") as? Map<String, Boolean>
+                                    val progressMap = document.data?.get("budgetStatus") as? Map<String, Boolean>
                                     if (progressMap != null) {
                                         isMarked = progressMap[rowData.first] ?: false
                                     }
@@ -283,11 +285,11 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
                                     checked = isMarked,
                                     onCheckedChange = { checked ->
                                         isMarked = checked
-                                        userDocument.update("topicStatus.${rowData.first}", checked)
+                                        userDocument.update("budgetStatus.${rowData.first}", checked)
                                             .addOnSuccessListener {
                                                 // Recalculate progress based on marked topics
                                                 userDocument.get().addOnSuccessListener { document ->
-                                                    val progressMap = document.data?.get("topicStatus") as? Map<String, Boolean>
+                                                    val progressMap = document.data?.get("budgetStatus") as? Map<String, Boolean>
                                                     if (progressMap != null) {
                                                         val markedCount = progressMap.count { it.value }
                                                         progress = markedCount.toFloat() / totalTopics
@@ -314,7 +316,7 @@ fun Table(levels: List<Pair<String, List<Triple<String, String, Int>>>>, navCont
 }
 @Preview(showBackground = true)
 @Composable
-fun PreviewTable() {
+fun PreviewTableBudget() {
     val navController = rememberNavController()
     val sampleLevels = listOf(
         "Beginner" to listOf(

@@ -52,11 +52,13 @@ import com.example.myscreen.Firebase.SignInPage
 import com.example.myscreen.R
 import com.example.myscreen.articles.CreditPage
 import com.example.myscreen.articles.DefaultDestination
+import com.example.myscreen.articles.IntroBudgeting
 import com.example.myscreen.articles.SavingsAccount
 import com.example.myscreen.articles.TypesOfSavings
 import com.example.myscreen.calculators.CalculationPage
 import com.example.myscreen.calculators.CompoundInterestCalculator
 import com.example.myscreen.module.Table
+import com.example.myscreen.module.TableBudget
 import com.example.myscreen.module.VideoPlay
 import com.example.myscreen.news.NewsScreen
 import com.example.myscreen.news.NewsViewModel
@@ -267,6 +269,9 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 composable(Routes.ImpOfSavingArticle){
                     ImpOfSavingArticle()
                 }
+                composable(Routes.IntroBudgeting){
+                    IntroBudgeting()
+                }
                 composable(Routes.CreditPage){
                     CreditPage()
                 }
@@ -287,7 +292,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 }
                 composable(Routes.LearningPage){
                     val easyData = listOf(
-                        Triple("Introduction to Saving Money", "The power of Saving", R.drawable.piggy),
+                        Triple("Introduction to Saving", "The power of Saving", R.drawable.piggy),
                         Triple("Setting Aside Allowance or Pocket Money for Savings", "Mastering art of Saving",
                             R.drawable.allowance
                         ),
@@ -300,29 +305,30 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     )
 
                     val mediumData = listOf(
-                        Triple("Opening a Savings Account", "Savings Account", R.drawable.savingsac),
-                        Triple("Setting and Tracking Savings Goals", "Track Saving Goals",
+                        Triple("Opening a Savings Account", "Savings Account",
+                            R.drawable.savingsac),
+                        Triple("Setting and Tracking Savings", "Track Saving Goals",
                             R.drawable.savetrack
                         ),
-                        Triple("Learning Interest and Its Growth", "Explore Interests"
+                        Triple("Learning About Interest and How It Grows Savings", "Explore Interests"
                             , R.drawable.interest),
-                        Triple("Understanding Basic Financial Terms", "Financial Terms",
+                        Triple("Exploring basic financial terms", "Financial Terms",
                             R.drawable.financeterms
                         )
                     )
 
                     val hardData = listOf(
 
-                        Triple("Types Of Savings Accounts", "Exploring Savings Accounts",
+                        Triple("Exploring Different Types Of Savings Accounts", "Exploring Savings Accounts",
                             R.drawable.typesofsaving
                         ),
                         // Add more rows as needed
-                        Triple("Long-Term Savings Plan", "Long term goals"
+                        Triple("Creating a Long-Term Savings Plan", "Long term goals"
                             , R.drawable.longsave),
                         Triple("Introduction to Investing for Teens", "Explore Investing",
                             R.drawable.investing
                         ),
-                        Triple("Learning Credit and Debt Management", "Credit & Debt management"
+                        Triple("Learning About Credit and Debt Management", "Credit & Debt management"
                             , R.drawable.debtmanage),
 
                     )
@@ -334,6 +340,72 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     )
 
                     Table(levels = levels, navController = navigationController)
+
+
+                }
+
+                composable(Routes.BudgetLearningPage){
+                    val easyData = listOf(
+                        Triple("Introduction to Budgeting", "What is Budget?"
+                            , R.drawable.introbudget),
+                        Triple("Tracking Income and Expenses",
+                            "Learn About Tracking",
+                            R.drawable.trackingfinance
+                        ),
+                        Triple("Creating a Basic Monthly Budget", "Create Your Budget",
+                            R.drawable.basicbudget),
+
+                        Triple("Identifying and Cutting Unnecessary Expenses",
+                            "Remove Unnecessary Expenses",
+                            R.drawable.cuttingexpenses
+                        ),
+                        // Add more rows as needed
+                    )
+
+                    val mediumData = listOf(
+                        Triple("Developing a Comprehensive Budgeting Plan",
+                            "Have A Budgeting Plan!",
+                            R.drawable.budgetingplan),
+                        Triple("Understanding Different Budgeting Methods",
+                            "Budgeting Methods",
+                            R.drawable.budgetingrule
+                        ),
+                        Triple("Budgeting for Irregular Expenses",
+                            "Handle Irregular Expenses"
+                            , R.drawable.irregularexpense),
+                        Triple("Emergency Fund Planning and Savings",
+                            "Emergency Funds",
+                            R.drawable.emergency
+                        )
+                    )
+
+                    val hardData = listOf(
+
+                        Triple("Advanced Expense Forecasting and Planning",
+                            "Planning Future Expenses",
+                            R.drawable.forecasting
+                        ),
+                        // Add more rows as needed
+                        Triple("Incorporating Debt Repayment Strategies into the Budget",
+                            "Strategies to Repay Debt"
+                            , R.drawable.strategiesbudgeting),
+                        Triple("Budgeting for Variable Income or Self-Employment",
+                            "Know About Self Employment",
+                            R.drawable.selfemployment
+                        ),
+                        Triple("Tax Planning and Budgeting for Tax Liabilities",
+                            "Reduce Tax Liabilities"
+                            , R.drawable.taxplanning),
+
+                        )
+
+                    val levels = listOf(
+                        "Beginner" to easyData,
+                        "Intermediate" to mediumData,
+                        "Advance" to hardData
+                    )
+
+                    TableBudget(levels = levels, navController = navigationController)
 
 
                 }

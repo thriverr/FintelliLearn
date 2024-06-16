@@ -124,7 +124,7 @@ fun MyLazyColumn(navController: NavController) {
                     description2 ="Management Skills" ,
                     color = lavender,
                     navController = navController,
-                    onClick = { /* Define action for clicking on Quiz button */ }
+                    onClick = { navController.navigate(Routes.BudgetLearningPage) }
                 )
             }
         }
