@@ -72,14 +72,15 @@ fun Bot(){
     Scaffold(
 
         topBar = {
-            Spacer(modifier = Modifier.height(60.dp))
+
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().padding(top=66.dp)
                     .background(MaterialTheme.colorScheme.primary)
                     .height(75.dp)
                     .padding(horizontal = 16.dp)
             ) {
+
                 Text(
                     modifier = Modifier
                         .align(Alignment.Center),
@@ -92,6 +93,7 @@ fun Bot(){
             }
         }
     ) {
+
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center){
             Column(

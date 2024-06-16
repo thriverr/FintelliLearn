@@ -444,7 +444,7 @@ fun CircularProgress(percentage: Float, strokeWidth: Dp, radius: Dp, modifier: M
 
         // Draw the progress arc on top of the gray circle
         drawArc(
-            color = Color.Blue,
+            color = Purple40,
             startAngle = -90f,
             sweepAngle = sweepAngle,
             useCenter = false,

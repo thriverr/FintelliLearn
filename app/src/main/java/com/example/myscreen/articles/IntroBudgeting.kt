@@ -130,28 +130,5 @@ fun IntroBudgeting() {
 }
 
 
-data class SectionDataBudget(val title: String, val content: String)
 
-val sectionsBudget = listOf(
-    SectionDataBudget("1." +
-            "What is a Budget", "A Budget is a statement that gives the details of ‘where money comes from’ and ‘where the money goes to’.\n" +
-            "\n" +
-            "In technical terms, the money that ‘comes in’ is referred to by terms such as income, revenue, receipts, etc., and the money that ‘goes out’ is referred to as expenses, expenditure, spending, etc. \n" +
-            "\n" +
-            "A Budget has to have at least three details: \n" +
-            "\n" +
-            "It has to be for an entity, and for a defined purpose: an individual, an event, an organisation, a household, a business, a government, etc.\n" +
-            "It is for a defined time period: generally, a budget is drawn up for a year, but this can vary. For example - in the case of events or projects, budget can be for the duration of those events/projects.\n" +
-            "It gives details of receipts and expenditure: it lists all the sources from where money comes, and all the destinations where the money will go. \n" +
-            "The following figures are a few examples of budgets:\n" +
-            "\n"),
-    SectionDataBudget("Savvy Helps You Reach Your Dreams", "Close your eyes and picture your biggest dreams – maybe it's a new toy, a fun trip, or even saving up for college one day. Whatever it is, Savvy can make it happen! With Savvy by your side, you can turn your dreams into reality."),
-    SectionDataBudget("Savvy Teaches You Patience", "Saving with Savvy is like planting a magical garden. Each day, you add a little bit of money, just like planting tiny seeds. With patience and care, your savings will grow into something big and amazing!"),
-    SectionDataBudget("Savvy Makes You Feel Proud", "Imagine looking at Savvy and seeing how much you've saved. It fills your heart with pride! You'll feel proud of yourself for being smart with your money and for having the power to make your dreams come true.")
-    ,SectionDataBudget("How much you should save?","It’s generally considered a good idea to have at least three months worth of living expenses saved somewhere safe and accessible for emergencies.\n" +
-            "\n" +
-            "However, how much you save depends on what you can afford.\n" +
-            "\n" +
-            "Some popular ways to budget are the 50/30/20 method and the 80/20 method. These suggest keeping 20% of your income as savings and using the rest to pay for other costs each month.")
 
-)

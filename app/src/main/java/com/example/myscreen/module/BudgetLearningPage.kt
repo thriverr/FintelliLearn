@@ -19,8 +19,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -145,7 +147,26 @@ fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, n
                 ),
             )
         }
-        Spacer(modifier = Modifier.size(24.dp))
+        Spacer(modifier = Modifier.size(12.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            LinearProgressIndicator(
+                progress = progress,
+                modifier = Modifier
+                    .weight(1f) // This will make the progress indicator take all available width
+                    .height(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp)) // Add space between the progress bar and the text
+            Text(
+                text = "${(progress).toInt()}%", // Display progress as percentage
+                fontSize = 18.sp
+            )
+        }
+        Spacer(modifier = Modifier.size(12.dp))
 
         Row(
             modifier = Modifier
@@ -306,12 +327,7 @@ fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, n
                 }
             }
         }
-        LinearProgressIndicator(
-            progress = progress,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
+
     }
 }
 @Preview(showBackground = true)
