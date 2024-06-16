@@ -162,7 +162,7 @@ fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, n
             )
             Spacer(modifier = Modifier.width(8.dp)) // Add space between the progress bar and the text
             Text(
-                text = "${(progress).toInt()}%", // Display progress as percentage
+                text = "${(progress*100).toInt()}%", // Display progress as percentage
                 fontSize = 18.sp
             )
         }
