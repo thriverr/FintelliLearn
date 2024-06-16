@@ -137,7 +137,7 @@ fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, n
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Savings",
+                text = "Budgeting",
                 fontSize = 38.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Default, color = Color.Black,
