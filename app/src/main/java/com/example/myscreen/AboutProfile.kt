@@ -49,9 +49,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myscreen.ui.theme.Pink80
 import com.example.myscreen.ui.theme.Purple40
 import com.example.myscreen.ui.theme.Purple80
+import com.example.myscreen.ui.theme.lightgrey
+import com.example.myscreen.ui.theme.medGrey
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -171,7 +172,7 @@ fun AboutProfile( currentUser: FirebaseUser){
         }
         Spacer(modifier = Modifier.height(56.dp))
         LazyColumn(
-            modifier = Modifier.fillMaxSize().background(Pink80),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
 
             verticalArrangement = Arrangement.spacedBy(16.dp),
 
@@ -179,19 +180,19 @@ fun AboutProfile( currentUser: FirebaseUser){
             item {
                 Card(
                     modifier = Modifier
-                        .fillMaxWidth().background(Pink80)
+                        .fillMaxWidth()
                         ,
 
 
                     ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(8.dp),
 
                     ) {
                         Spacer(modifier = Modifier.height(56.dp))
                         Box(modifier = Modifier, contentAlignment = Alignment.Center){
                             Text(
-                                text = "    Welcome, $username !",
+                                text = "      Welcome, $username !",
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
@@ -251,7 +252,7 @@ fun AboutProfile( currentUser: FirebaseUser){
                             }
 
 
-                        Spacer(modifier = Modifier.height(16.dp))
+
 
                         // Circular Progress Tracker
 
@@ -327,7 +328,7 @@ fun AboutProfile( currentUser: FirebaseUser){
                                 }
                                 // Toggle editing mode
                                 isEditing = false
-                            }) {
+                            },modifier=Modifier.background(lightgrey)) {
                                 Text(text = "Save")
                             }
                         } else {
@@ -436,7 +437,7 @@ fun CircularProgress(percentage: Float, strokeWidth: Dp, radius: Dp, modifier: M
 
         // Draw the full gray circle as the background
         drawCircle(
-            color = Color.Gray,
+            color = medGrey,
             radius = canvasSize /2 - strokeWidthPx/19,
             style = Stroke(strokeWidthPx)
         )
