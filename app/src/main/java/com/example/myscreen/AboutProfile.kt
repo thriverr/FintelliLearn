@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,11 +43,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myscreen.ui.theme.Pink80
 import com.example.myscreen.ui.theme.Purple40
 import com.example.myscreen.ui.theme.Purple80
 import com.google.firebase.auth.FirebaseUser
@@ -170,27 +171,27 @@ fun AboutProfile( currentUser: FirebaseUser){
         }
         Spacer(modifier = Modifier.height(56.dp))
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxSize().background(Pink80),
+
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+
         ){
             item {
                 Card(
                     modifier = Modifier
-                        .fillMaxWidth().background(Purple80)
+                        .fillMaxWidth().background(Pink80)
                         ,
 
 
                     ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+
                     ) {
                         Spacer(modifier = Modifier.height(56.dp))
                         Box(modifier = Modifier, contentAlignment = Alignment.Center){
                             Text(
-                                text = "     Welcome, $username !",
+                                text = "    Welcome, $username !",
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
@@ -234,7 +235,7 @@ fun AboutProfile( currentUser: FirebaseUser){
                                 }
                         }}
                         Spacer(modifier = Modifier.height(16.dp))
-                        Row(modifier=Modifier.padding(start=16.dp)) {
+                        Row(modifier=Modifier) {
                             Icon(
                                 Icons.Default.Score,
                                 contentDescription = "Coins"
@@ -259,7 +260,11 @@ fun AboutProfile( currentUser: FirebaseUser){
                             TextField(
                                 value = username,
                                 onValueChange = { username = it },
-                                label = { Text("Username") }
+                                label = { Text("Username") },
+                                textStyle = TextStyle(
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                ),
                             )
 
 
@@ -273,7 +278,13 @@ fun AboutProfile( currentUser: FirebaseUser){
                                 TextField(
                                     value = dob,
                                     onValueChange = { dob = it },
-                                    label = { Text("dd/mm/yyyy") })
+                                    label = { Text("dd/mm/yyyy") },
+                                    textStyle = TextStyle(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.SemiBold
+                                    ),
+
+                                )
 
 
                             }
@@ -282,12 +293,22 @@ fun AboutProfile( currentUser: FirebaseUser){
                             TextField(
                                 value = profession,
                                 onValueChange = { profession = it },
-                                label = { Text("Profession") })
+                                label = { Text("Profession") },
+                                textStyle = TextStyle(
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                ),
+                            )
                             Spacer(modifier = Modifier.height(16.dp))
                             TextField(
                                 value = finshaalaId,
                                 onValueChange = { finshaalaId = it },
-                                label = { Text("Finshaala_id") })
+                                label = { Text("Finshaala_id") },
+                                textStyle = TextStyle(
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                ),
+                            )
                             Spacer(modifier = Modifier.height(16.dp))
                             TextButton(onClick = {
                                 // Save data to Firestore
@@ -311,7 +332,7 @@ fun AboutProfile( currentUser: FirebaseUser){
                             }
                         } else {
                             // Non-editable fields
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement =Arrangement.Center) {
                                 Icon(
@@ -322,9 +343,10 @@ fun AboutProfile( currentUser: FirebaseUser){
                                     text = "User name: $username",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color.Black,
-                                    textAlign = TextAlign.Center
+                                     fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Start, fontSize = 20.sp
                                 )}
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement =Arrangement.Center) {
                                 Icon(
@@ -335,9 +357,10 @@ fun AboutProfile( currentUser: FirebaseUser){
                                     text = "Date of Birth: $dob",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color.Black,
-                                    textAlign = TextAlign.Center
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Start, fontSize = 20.sp
                                 )}
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement =Arrangement.Center) {
                                 Icon(
@@ -348,9 +371,10 @@ fun AboutProfile( currentUser: FirebaseUser){
                                     text = "Profession: $profession",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color.Black,
-                                    textAlign = TextAlign.Center
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Start, fontSize = 20.sp
                                 )}
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement =Arrangement.Center) {
                                 Icon(
@@ -361,7 +385,8 @@ fun AboutProfile( currentUser: FirebaseUser){
                                     text = "Finshaaala ID: $finshaalaId",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color.Black,
-                                    textAlign = TextAlign.Center
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Start, fontSize = 20.sp
                                 )}
                             Spacer(modifier = Modifier.height(16.dp))
                             Box(modifier = Modifier.align(Alignment.CenterHorizontally)){
