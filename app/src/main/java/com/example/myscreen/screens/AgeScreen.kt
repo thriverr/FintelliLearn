@@ -68,7 +68,7 @@ fun AgeScreen(navController: NavController){
             text = " Retire Ease",
             age="Age(60+)",
             iconId = R.drawable.retirementmodule,
-            onClick = { navController.navigate(Routes.AdultScreen) }
+            onClick = { navController.navigate(Routes.RetireScreen) }
         )
     }
 }

@@ -73,7 +73,7 @@ fun TableBudget(levels: List<Pair<String, List<Triple<String, String, Int>>>>, n
     val destinationMap = remember {
         mutableMapOf<String, String>().apply {
             // Define your mapping here
-            put("What is Budget?", Routes.ImpOfSavingArticle)
+            put("What is Budget?", Routes.IntroBudgeting)
             put("Learn About Tracking", Routes.CreditPage)
             put("Create Your Budget", Routes.CreditPage)
             put("Remove Unnecessary Expenses", Routes.CreditPage)

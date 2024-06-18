@@ -65,6 +65,7 @@ import com.example.myscreen.news.NewsViewModel
 import com.example.myscreen.screens.AdultScreen
 import com.example.myscreen.screens.AgeScreen
 import com.example.myscreen.screens.KidsScreen
+import com.example.myscreen.screens.RetireScreen
 import com.example.myscreen.ui.theme.Purple_200
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -252,6 +253,9 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                 composable(Routes.AdultScreen){
                     AdultScreen(navController =navigationController)
                 }
+                composable(Routes.RetireScreen){
+                    RetireScreen()
+                }
                 composable(Routes.CompoundInterestCalculator){
                     CompoundInterestCalculator()
                 }
@@ -336,7 +340,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     val levels = listOf(
                         "Beginner" to easyData,
                         "Intermediate" to mediumData,
-                        "Advance" to hardData
+                        "Advanced" to hardData
                     )
 
                     Table(levels = levels, navController = navigationController)
@@ -402,7 +406,7 @@ fun NavDrawer(auth: FirebaseAuth, db: FirebaseFirestore){
                     val levels = listOf(
                         "Beginner" to easyData,
                         "Intermediate" to mediumData,
-                        "Advance" to hardData
+                        "Advanced" to hardData
                     )
 
                     TableBudget(levels = levels, navController = navigationController)
