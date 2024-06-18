@@ -1,6 +1,6 @@
 package com.example.myscreen.Firebase
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.myscreen.R
 import com.example.myscreen.navigation.Routes
 import com.example.myscreen.ui.theme.BgBlueColor
 import com.example.myscreen.ui.theme.Purple_200
@@ -46,10 +51,16 @@ fun FintelliLearn(navController: NavController) {
     // Set up the screen with the desired background color
     Box(
         modifier = Modifier
-            .fillMaxSize().background(background)
+            .fillMaxSize()
             // Set the background color
-            .padding(16.dp) // Add padding around the screen
+            // Add padding around the screen
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.bgimg), // Replace with your image resource ID
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize(), // Column takes the whole size of the screen
@@ -67,7 +78,7 @@ fun FintelliLearn(navController: NavController) {
                     fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
                     fontFamily = FontFamily.Serif,
-                    fontSize = 32.sp, // Large text size in sp units
+                    fontSize = 34.sp, // Large text size in sp units
                     modifier = Modifier.padding(bottom = 12.dp) // Add padding below the text
                 )
             }
@@ -81,13 +92,13 @@ fun FintelliLearn(navController: NavController) {
                     fontFamily = FontFamily.Serif,
                     fontStyle = FontStyle.Italic ,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp, // Large text size in sp units
+                    fontSize = 34.sp, // Large text size in sp units
                     modifier = Modifier.padding(bottom = 12.dp) // Add padding below the text
                 )
             }
 
             // Spacer between the text and the buttons
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(52.dp))
 
             // Row containing the buttons
             Row(
@@ -107,7 +118,7 @@ fun FintelliLearn(navController: NavController) {
                     ),
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text(text = "Login")
+                    Text(text = "Login", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
 
                 // Second button with dynamic color change and navigation on click
@@ -122,9 +133,16 @@ fun FintelliLearn(navController: NavController) {
                     ),
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text(text = "Sign Up")
+                    Text(text = "Sign Up", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FintelliLearnPreview() {
+    val navController = rememberNavController()
+    FintelliLearn(navController)
 }
